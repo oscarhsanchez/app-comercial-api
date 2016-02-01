@@ -1,0 +1,107 @@
+1. Creamos el campo secret_key en entidad -> Tiene que ser unico
+
+3. Poner en todos los campos de update_at DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+
+6. Meter Campos de promociones en pedido, albaran y factura
+
+
+CREATE TABLE `log` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` INT(11),
+  `id_dispositivo` VARCHAR(100),
+  `entitySecret` VARCHAR(100),  
+  `token` VARCHAR(100),
+  `ip` VARCHAR(50),
+  `code` INT(11),
+  `message` VARCHAR(50),
+  `data` TEXT,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,  
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+
+SOLR
+------------------
+http://localhost:8983/solr/budget/dataimport?command=full-import
+http://localhost:8983/solr/budget/dataimport?command=delta-import
+
+	
+
+LOGIN DEL TPV
+---------------------------
+0. Comprobamos si la version de la bbdd corresponde con la establecida en la APP. --> Si no coincide reseteamos la bbdd Primero comprobamos si hay algo pendiente de envio. --> Si hay algo pendiente de envio lo intentamos enviar y si no podemos mostramos mensaje de error.
+
+1. Comprobamos si hay algun bloque con fecha de actualizacion inferior a un mes. En caso de que sea asi, mostramos un mensaje avisando que la bbdd se va a resetear y reseteamos bbdd.
+
+2. http://localhost:300/index.php/login
+
+	Enviamos: deviceId, entitySecret, mail, pass
+	Devuelve: Usuario, token
+
+	Comprobamos si tenemos que hacer la peticion para actualizar la serie. --> EN la primera actualizacion siempre la pediremos
+		getSerieByUserAssigned -> Le pasamos el userId.
+
+	Comrpobamos si tenemos que enviar la bbdd - Se enviaria en segundo plano
+
+3. Pedimos la ultima version de la app del TPV y comprobamos si hay que actualizar.
+
+
+4. Pedimos el TPV.
+
+	Enviamos: El identificador unico.
+	Devuelve: El TPV y el usuario asociado.
+
+5. Pedimos los parametros del TPV
+
+
+
+
+OBJETO OPCIONES
+--------------------------------------
+Pagination:
+	Progresive: (Always order by created_at)		
+		LastId
+		Limit
+
+	Multipart:
+		Cached (Limited on number of results. If is bigger than limit it will be ignorated) - 0, 1
+		Page 
+		PageSize
+
+		returns
+			cache_token
+			totalPages
+
+Filter
+	Enabled
+	Array Object (Field, type, Value, value2) 
+		type --> =, <, >, like, between
+
+Orderby
+	Enable
+	Array Object (Fields, type)
+		type --> asc, desc
+
+
+ASIGNACION DE CLIENTES
+---------------------------------------------
+1. ASIGNACION GENERICA - Campo Asignacion_generica en tabla cliente.
+2. ASIGNACION DIRECTA r_usu_cli
+3. ASIGNACION TEMPORAL:
+	- El cliente se envia con la visita. Se marca como temporal.
+	- Eliminamos el cliente en el TPV haciendo la comprobacion de si hay visitas en el futuro.
+
+
+TAREAS
+-------------------------------
+Libreria esocialsolr -> insertert, update, ...
+Dcoumentos --> create, update, delete, get(Paginated), search(Paginated)
+Log y control de errores
+
+
+1234 5678 9abc
+
+1235 6789 abc4
+
