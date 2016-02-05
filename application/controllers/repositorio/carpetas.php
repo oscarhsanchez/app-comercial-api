@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 // This can be removed if you use __autoload() in config.php
-require_once(APPPATH.EF_BASE_CONTROLLER);
+require_once(APPPATH.VALLAS_BASE_CONTROLLER);
 require_once(APPPATH.ENTITY_USER);
 require_once(APPPATH.ENTITY_APIERROR);
 require_once(APPPATH.ENTITY_CLIENT);

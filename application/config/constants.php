@@ -85,8 +85,9 @@ define('ERROR_GETTING_INFO', 6000);
 /* DEV  */
 
 
-define('TOKEN_SALT_KEY', './123$eFinanzas!!.!$eSocialRB))(45');
-define('SESSION_TIMEOUT', 60); //Minutes
+define('TOKEN_SALT_KEY', './123$vallas!!.!$eSocialRB))(45');
+define('RENEW_SALT_KEY', './gPOvall@s!!.!$eSocial))(MXmx');
+define('SESSION_TIMEOUT', 600);
 define('FB_APP_ID', '638843436165683');
 define('FB_SECRET', 'e9a4c5856fcae0eb396d11e6721f8752');
 define('TWITTER_KEY', 'lx9StMgAc6wSAsDLGsA');
@@ -95,10 +96,9 @@ define('MULTIPART_CACHE_PAGINATION_MAX_SIZE', 100000);
 define('MULTIPART_CACHE_PAGINATION_EXPIRE_TIME', 4000);
 define('MULTIPART_AMH_SESSION_EXPIRE_TIME', 600);
 
-define('MEMCACHE_SERVER', '192.162.12.50'); //192.162.12.50
+define('MEMCACHE_SERVER', '127.0.0.1'); //192.162.12.50
 
-define('SOLR_SERVER', 'localhost:8983/solr');
- 
+
 //Envio SMS
 define('SMS_ACCOUNT', 'jaime.banus@rbconsulting.es');
 define('SMS_PASS', 'gabiola');
@@ -116,17 +116,6 @@ define('MAIL_TYPE', 'html');
 //URL base para amazon
 define('AMAZON_BASE_URL', 'https://s3.amazonaws.com/efinanzas/');
 
-/*
-|--------------------------------------------------------------------------
-| MODELS PATH
-|--------------------------------------------------------------------------
-|
-| Definicion de rutas para las clases del Modelo
-|
-*/
-define('MODEL_USER', '/models/usuario_model.php');
-define('MODEL_SESSION', '/models/session_model.php');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -136,96 +125,13 @@ define('MODEL_SESSION', '/models/session_model.php');
 | Definicion de rutas para las entidades
 |
 */
-define('EF_BASE_CONTROLLER', '/controllers/ef_controller.php');
-define('ENTITY_ESOCIAL_ENTITY', '/entities/eEntity.php');
+define('MAX_PASSWORD_LENGTH', 72);
 define('ENTITY_APIERROR', '/entities/APIerror.php');
-define('ENTITY_USER', '/entities/usuario.php');
-define('ENTITY_ENTITY_USER', '/entities/entityUser.php');
-define('ENTITY_DEVICE', '/entities/dispositivo.php');
-define('ENTITY_ENTITY', '/entities/entity.php');
-define('ENTITY_PARAMETER_TPV', '/entities/parameterTpv.php');
-define('ENTITY_VERSION_CONTROL', '/entities/versionControl.php');
-define('ENTITY_SERIE', '/entities/serie.php');
-define('ENTITY_ORDER', '/entities/pedido.php');
-define('ENTITY_ORDER_LINE', '/entities/pedidoLine.php');
-define('ENTITY_WAYBILL', '/entities/albaran.php');
-define('ENTITY_WAYBILL_LINE', '/entities/albaranLine.php');
-define('ENTITY_BUDGET', '/entities/presupuesto.php');
-define('ENTITY_BUDGET_LINE', '/entities/presuLine.php');
-define('ENTITY_INVOICE', '/entities/factura.php');
-define('ENTITY_INVOICE_LINE', '/entities/facturaLine.php');
-define('ENTITY_REVENUE', '/entities/ingreso.php');
-define('ENTITY_REVENUE_LINE', '/entities/ingresoLine.php');
-define('ENTITY_EXCEPTION', '/entities/APIexception.php');
-define('ENTITY_DELEGACION', '/entities/delegacion.php');
-define('ENTITY_CLIENT', '/entities/cliente.php');
-define('ENTITY_COND_PAGO', '/entities/cond_pago.php');
-define('ENTITY_CLIENTE_AGRUPACION', '/entities/cliente_agrupacion.php');
-define('ENTITY_CLIENTE_COND_PAGO', '/entities/cliente_cond_pago.php');
-define('ENTITY_CLIENTE_RAPPEL', '/entities/cliente_rappel.php');
-define('ENTITY_CLIENTE_CONTACTO', '/entities/cliente_contacto.php');
-define('ENTITY_CLIENTE_TARJETA', '/entities/tarjeta.php');
-define('ENTITY_R_USU_CLI', '/entities/r_usu_cli.php');
-define('ENTITY_R_USU_CAP', '/entities/r_usu_cap.php');
-define('ENTITY_R_CLI_AGR', '/entities/r_cli_agr.php');
-define('ENTITY_COND_ESPECIALES', '/entities/cond_especiales.php');
-define('ENTITY_PRODUCT', '/entities/articulo.php');
-define('ENTITY_MARCA_ARTICULO', '/entities/marcaArticulo.php');
-define('ENTITY_RESTRICCION_ARTICULO', '/entities/restriccionArticulo.php');
-define('ENTITY_PRODUCT_IMG', '/entities/articuloImagen.php');
-define('ENTITY_PRODUCT_SUBFAMILY', '/entities/articuloSubFamilia.php');
-define('ENTITY_PRODUCT_FAMILY', '/entities/articuloFamilia.php');
-define('ENTITY_PRODUCT_GROUP', '/entities/articuloGrupo.php');
-define('ENTITY_PRODUCT_AGR', '/entities/articuloAgr.php');
-define('ENTITY_R_ART_AGR', '/entities/r_art_agr.php');
-define('ENTITY_CASH_COUNT', '/entities/arqueo.php');
-define('ENTITY_CASH_COUNT_LINE', '/entities/arqueoLine.php');
-define('ENTITY_VISITA', '/entities/visita.php');
-define('ENTITY_PAIS', '/entities/pais.php');
-define('ENTITY_PROVINCIA', '/entities/provincia.php');
-define('ENTITY_ZONA', '/entities/zona.php');
-define('ENTITY_SUBZONA', '/entities/subZona.php');
-define('ENTITY_TARIFA', '/entities/tarifa.php');
-define('ENTITY_TARIFA_ARTICULO', '/entities/tarifa_articulo.php');
-define('ENTITY_TARIFA_DELEGACION', '/entities/tarifa_delegacion.php');
-define('ENTITY_TARIFA_CLIENTE', '/entities/tarifa_cliente.php');
-define('ENTITY_VENTA_DIRIGIDA', '/entities/venta_dirigida.php');
-define('ENTITY_MOTIVO_NO_VENTA_VENTA_DIRIGIDA', '/entities/motivoNoVentaVentaDirigida.php');
-define('ENTITY_LINEA_MERCADO', '/entities/linea_mercado.php');
-define('ENTITY_USUARIO_GEO', '/entities/usuario_geo.php');
-define('ENTITY_FORMA_PAGO', '/entities/forma_pago.php');
-define('ENTITY_R_ART_ALM', '/entities/r_art_alm.php');
-define('ENTITY_R_ART_PRO', '/entities/r_art_pro.php');
-define('ENTITY_PROMOCION', '/entities/promocion.php');
-define('ENTITY_GRUPO_REGLA', '/entities/grupo_regla.php');
-define('ENTITY_REGLA', '/entities/regla.php');
-define('ENTITY_REGLA_PARAMETRO', '/entities/regla_parametro.php');
-define('ENTITY_REGLA_VALOR', '/entities/regla_valor.php');
-define('ENTITY_MOTIVO_NO_VENTA', '/entities/motivoNoVenta.php');
-define('ENTITY_ALMACEN', '/entities/almacen.php');
-define('ENTITY_RECIBO_COBRO', '/entities/recibo_cobro.php');
-define('ENTITY_REFERENCIA_MPV', '/entities/referencia_mpv.php');
-define('ENTITY_TIPO_MPV', '/entities/tipo_mpv.php');
-define('ENTITY_R_DEL_MPV', '/entities/r_del_mpv.php');
-define('ENTITY_INCIDENCIA', '/entities/incidencia.php');
-define('ENTITY_REGISTRO_INCIDENCIA', '/entities/registro_incidencia.php');
-define('ENTITY_MOVIMIENTO_ALMACEN', '/entities/movimientoAlmacen.php');
-define('ENTITY_MOVIMIENTO_ALMACEN_LIN', '/entities/movimientoAlmacenLine.php');
-define('ENTITY_INVENTARIO', '/entities/inventario.php');
-define('ENTITY_INVENTARIO_LIN', '/entities/inventarioLine.php');
-define('ENTITY_MOTIVO_PROMOCION', '/entities/motivoPromocion.php');
-define('ENTITY_REPO_CARPETA', '/entities/repoCarpeta.php');
-define('ENTITY_REPO_ARCHIVO', '/entities/repoArchivo.php');
-define('ENTITY_R_PED_PRO', '/entities/r_ped_pro.php');
-define('ENTITY_CLIENTE_AMH', '/entities/cliente_amh.php');
-define('ENTITY_PROVEEDOR', '/entities/Proveedor.php');
-define('ENTITY_PEDIDO_PROVEEDOR_CAB', '/entities/pedidoProveedorCab.php');
-define('ENTITY_PEDIDO_PROVEEDOR_LIN', '/entities/pedidoProveedorLin.php');
-define('ENTITY_PEDIDO_PROVEEDOR_LIN_LOTE', '/entities/pedidoProveedorLinLote.php');
-define('ENTITY_ARTICULO_FAVORITO', '/entities/articuloFavorito.php');
-define('ENTITY_ARTICULO_LOTE', '/entities/articuloLote.php');
-define('ENTITY_INCIDENCIA_PICKING', '/entities/incidenciaPicking.php');
-define('ENTITY_PROVEEDOR_VALORACION', '/entities/proveedorValoracion.php');
+define('ENTITY_ESOCIAL_ENTITY', '/entities/eEntity.php');
+define('VALLAS_BASE_CONTROLLER', '/controllers/vallas_controller.php');
+define('ENTITY_SESSION', '/entities/session.php');
+define('ENTITY_USER', '/entities/user.php');
+define('ENTITY_CLIENTE', '/entities/cliente.php');
 
 
 

@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 /* DEV */
-$db['default']['hostname'] = 'localhost';
+$db['default']['hostname'] = '10.10.10.10';
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';
-$db['default']['database'] = 'efinanzas';
+$db['default']['database'] = 'vallas';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = FALSE;

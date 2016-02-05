@@ -44,6 +44,31 @@ function encryptPass($raw, $salt, $iterations, $algorithm, $encodeHashAsBase64) 
     return $encodeHashAsBase64 ? base64_encode($digest) : bin2hex($digest);
 }
 
+function bCryptPassword($raw, $salt, $cost)
+{
+    if (isPasswordTooLong($raw)) {
+        throw new BadCredentialsException('Invalid password.');
+    }
+
+    $options = array('cost' => $cost);
+
+    if ($salt) {
+        $options['salt'] = $salt;
+    }
+
+    return password_hash($raw, PASSWORD_BCRYPT, $options);
+}
+
+function isPasswordValid($encoded, $raw, $salt)
+{
+    return !isPasswordTooLong($raw) && password_verify($raw, $encoded);
+}
+
+function isPasswordTooLong($password)
+{
+    return strlen($password) > MAX_PASSWORD_LENGTH;
+}
+
 function getToken() {
     return sha1(rand().date('Y-m-d H:i:s').rand());
 }

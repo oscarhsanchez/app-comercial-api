@@ -5,7 +5,6 @@ abstract class eEntity {
 	
 	
 	abstract function getPK();
-	abstract function setPK();
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbddriu
 	abstract function unSetProperties();
 
@@ -22,8 +21,8 @@ abstract class eEntity {
     }
 
     function _saveWithOutAutoNumeric($ignoreNulls, $omittedFields = null) {
-    	$this->CI =& get_instance();
-    	$this->CI->load->database();
+    	$CI =& get_instance();
+    	$CI->load->database();
 
     	$sql = "INSERT INTO " . $this->getTableName() . " (";
 
@@ -61,14 +60,14 @@ abstract class eEntity {
 
 		$sql = $sql . ") VALUES (" . $vars . ") ON DUPLICATE KEY UPDATE " . $upd;
 
-		$res = $this->CI->db->query($sql, $prop);
+		$res = $CI->db->query($sql, $prop);
 		return $res;
     }
 
 	function _saveWithAutoNumeric($ignoreNulls, $omittedFields = null) {
 
-		$this->CI =& get_instance();
-    	$this->CI->load->database();
+		$CI =& get_instance();
+    	$CI->load->database();
     	
 		$pkCondition = "";
 		$isUpdate = true;
@@ -110,16 +109,16 @@ abstract class eEntity {
 
 		foreach ($prop as $key => $value) {
 			if ((!$ignoreNulls || ($ignoreNulls && $value != null)) && (property_exists(get_class($this), $key)) ) {
-				$this->CI->db->set($key, $value);
+				$CI->db->set($key, $value);
 			}			
 		}
 
 		if ($isUpdate) {
-			$this->CI->db->where($pkCondition);
-			return $this->CI->db->update($this->getTableName());
+			$CI->db->where($pkCondition);
+			return $CI->db->update($this->getTableName());
 		} else {
-			$this->CI->db->insert($this->getTableName());
-			$insId = $this->CI->db->insert_id();
+			$CI->db->insert($this->getTableName());
+			$insId = $CI->db->insert_id();
 
 			return $insId;
 		}

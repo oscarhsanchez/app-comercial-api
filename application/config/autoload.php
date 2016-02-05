@@ -52,7 +52,7 @@ $autoload['packages'] = array(APPPATH.'entities/entity');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 's3');
+$autoload['libraries'] = array('database', 's3', 'esocialmemcache');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('log_model');
+$autoload['model'] = array('security_model');
 
 
 /* End of file autoload.php */

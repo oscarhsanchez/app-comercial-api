@@ -1,29 +1,38 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-//require(APPPATH.ENTITY_USER);
+require_once(APPPATH.ENTITY_SESSION);
 
 class session_model extends CI_Model {
     /**
-     * Crea una nueva sesion.
+     * Crea una nueva session.
      *
      * @param $userId
-     * @param $deviceId
-     * @param $entityId
-     * @return null|token
+     * @param $countryId
+     * @param $phoneId
+     * @return null|session
      */
-    function createSession($userId, $deviceId, $entityId) {
-		$token = sha1($userId.$deviceId.time().TOKEN_SALT_KEY);
-		$q = new stdClass();
-		$q->id_usuario = $userId;
-		$q->fk_entidad = $entityId;
-		$q->id_dispositivo = $deviceId;		
-		$q->token = $token;
-		$q->ip = $this->input->ip_address();
-		$this->db->set('created_at', 'CURRENT_TIMESTAMP', false);
-		$this->db->set('updated_at', 'CURRENT_TIMESTAMP', false); 
-		$this->db->set('expires_at', "CURRENT_TIMESTAMP + INTERVAL ".SESSION_TIMEOUT." MINUTE", false);
-		if ($this->db->insert('api_session', $q) && $this->db->affected_rows() > 0)	
-			return $token;
+    function createSession($userId, $roles, $countryId, $phoneId) {
+		$token = sha1($userId.$countryId.time().TOKEN_SALT_KEY);
+        $renew_token = sha1($userId.$countryId.time().RENEW_SALT_KEY);
+
+		$sesion = new session();
+        $sesion->fk_user = $userId;
+        $sesion->fk_pais = $countryId;
+        $sesion->roles = $roles;
+        $sesion->phone_id = $phoneId;
+        $sesion->renew_token = $renew_token;
+        $sesion->access_token = $token;
+        $sesion->ip = $this->input->ip_address();
+        $this->db->set('ip', "'".$this->input->ip_address()."'", false);
+        $this->db->set('created_at', 'CURRENT_TIMESTAMP', false);
+		$this->db->set('updated_at', 'CURRENT_TIMESTAMP', false);
+		$this->db->set('expires_at', "CURRENT_TIMESTAMP + INTERVAL ".SESSION_TIMEOUT." SECOND", false);
+
+        unset($sesion->created_at);
+        unset($sesion->updated_at);
+
+        if ($sesion->id = $sesion->_save(true, true))
+			return $sesion;
 		else
 			return null;
 	}
@@ -42,64 +51,44 @@ class session_model extends CI_Model {
     }
 
     /**
-     * Actualiza la sesion del usuarios
-     *
-     * @param $token
-     * @return Boolean
+     * @param $accesToken
+     * @param $deviceId
+     * @return Session
      */
-    function updateSession($token) {
-		$this->db->set('expires_at', "CURRENT_TIMESTAMP + INTERVAL ".SESSION_TIMEOUT." MINUTE", false);
-		$this->db->where("token", $token);
-		return $this->db->update('api_session');
-	}
+    function getSessionByAccesToken($accessToken, $deviceId) {
+        $this->db->where('access_token', $accessToken);
+        $this->db->where('phone_id', $deviceId);
+        $query = $this->db->get('session');
+
+        $session = $query->row(0, 'session');
+        return $session;
+    }
 
     /**
-     * Valida si una sesion esta activa o no
+     * Renueva una session a partir del token de renovacion.
      *
      * @param $userId
-     * @param $deviceId
-     * @param $entityId
-     * @param $token
-     * @return token|null
+     * @param $phoneId
+     * @param $countryId
+     * @param $renewToken
+     * @return session|null
      */
-    function validateSession($userId, $deviceId, $entityId, $token) {
-		$q = new stdClass();
-		$this->db->where("id_usuario = '".$userId."' AND id_dispositivo = '".$deviceId."' AND fk_entidad = ".$entityId." AND token = '".$token."' AND expires_at > CURRENT_TIMESTAMP ");
-		$q = $this->db->get("api_session");
-		$row = $q->row();
-		if(!$row){
+    function renewSession($userId, $roles, $countryId, $phoneId, $renewToken) {
+		$q = "SELECT renew_token FROM session WHERE fk_user = '$userId' AND fk_pais = '$countryId' AND phone_id = '$phoneId' ORDER BY created_at DESC";
+        $query = $this->db->query($q);
+
+        $result = $query->row();
+
+        if(!$result){
 			return null;
 		}else{
-			//Cada Vez que validemos la sesion actualizamos la fecha
-			$this->updateSession($token);
-			return $row->token;
+			if ($result->renew_token == $renewToken) {
+                return $this->createSession($userId, $roles, $countryId, $phoneId);
+            } else
+                return null;
 		}
 	}
 
-    /**
-     * Comprueba si una session a caducado y ha pasado el margen establecido
-     *
-     * @param $userId
-     */
-    function monitorSession($userId) {
-        $q = new stdClass();
-        $this->db->select("MAX(expires_at) AS expires");
-        $this->db->where("id_usuario", $userId);
-        $q = $this->db->get("api_session");
-        $row = $q->row();
-        if($row){
-            $expires = new DateTime($row->expires);
-            $actual = new DateTime();
-            $interval = $expires->diff($actual);
-            // Si es negativa y ademas de los 60 min de session ha pasado 5 min, lo consideramos como error
-            if (!$interval->invert && $interval->i > 5)
-                return false;
-            else
-                return true;
-        }
-
-        return false;
-    }
 
 }
 
