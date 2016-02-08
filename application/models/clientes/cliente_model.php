@@ -1,65 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once(APPPATH.ENTITY_CLIENT);
-require_once(APPPATH.ENTITY_R_USU_CLI);
+require_once(APPPATH.ENTITY_CLIENTE);
+
 
 
 class cliente_model extends CI_Model {
 
-    /** ---------------------------------------
-     *            FUNCIONES DE APOYO
-     ----------------------------------------*/
-    private function getAssignedQuery($entityId, $userPk, $state, $lastTimeStamp) {
-
-        $q = " SELECT DISTINCT clientes.pk_cliente, clientes.fk_entidad, clientes.fk_delegacion, clientes.fk_cliente_subzona, clientes.fk_linea_mercado, clientes.fk_forma_pago, clientes.fk_cliente_cond_esp, clientes.fk_provincia_entidad,
-                clientes.fk_pais_entidad, clientes.cod_cliente, clientes.bool_es_captacion, clientes.nombre_comercial, clientes.raz_social, clientes.nif, clientes.direccion, clientes.poblacion, clientes.codpostal, clientes.telefono_fijo,
-                clientes.telefono_movil, clientes.fax, clientes.mail, clientes.web, clientes.dia_pago, clientes.observaciones, clientes.tipo_iva, clientes.estacionalidad_periodo1_desde, clientes.estacionalidad_periodo1_hasta, clientes.bool_facturacion_final_mes,
-                clientes.estacionalidad_periodo2_desde, clientes.estacionalidad_periodo2_hasta, clientes.bool_asignacion_generica, clientes.varios1, clientes.varios2, clientes.varios3, clientes.varios4, clientes.varios5, clientes.credito_maximo,
-                clientes.varios6, clientes.varios7, clientes.varios8, clientes.varios9, clientes.varios10, clientes.token AS token_cli, clientes.longitud, clientes.latitud, clientes.estado AS estado_cli, clientes.bool_albaran_valorado, clientes.fecha_baja,
-                clientes.direccion_entrega, clientes.poblacion_entrega, clientes.codpostal_entrega, clientes.fk_provincia_entrega, clientes.puntos, clientes.hora_apertura, clientes.hora_cierre, clientes.horario_entrega_inicial, clientes.horario_entrega_final,
-
-                IFNULL(clientes.fk_cliente_facturacion, clientes.pk_cliente) AS fk_cliente_facturacion, IFNULL(cli_fac.raz_social, clientes.raz_social) AS raz_social_facturacion, IFNULL(cli_fac.nif, clientes.nif) AS nif_facturacion,
-                IFNULL(cli_fac.direccion, clientes.direccion) AS direccion_facturacion, IFNULL(cli_fac.poblacion, clientes.poblacion) AS poblacion_facturacion, IFNULL(cli_fac.codpostal, clientes.codpostal) AS codpostal_facturacion,
-                IFNULL(cli_fac.fk_pais_entidad, clientes.fk_pais_entidad) AS fk_pais_facturacion, IFNULL(cli_fac.fk_provincia_entidad, clientes.fk_provincia_entidad) AS fk_provincia_facturacion,
-
-                IFNULL(pk_usuario_cliente, fk_r_usu_cli) AS pk_usuario_cliente, IFNULL(r_usu_cli.fk_cliente, r_usu_cli_hist.fk_cliente) AS fk_cliente, IFNULL(r_usu_cli.fk_canal_venta, r_usu_cli_hist.fk_canal_venta) AS fk_canal_venta, r_usu_cli.fk_usuario_vendedor, r_usu_cli.fk_usuario_repartidor, r_usu_cli.fk_usuario_receptor_vendedor,
-                r_usu_cli.fk_usuario_receptor_repartidor,r_usu_cli.fecha_repartidor_desde, r_usu_cli.fecha_repartidor_hasta, r_usu_cli.fecha_vendedor_desde, r_usu_cli.fecha_vendedor_hasta,
-                r_usu_cli.tipo_frecuencia, r_usu_cli.repetir_cada, r_usu_cli.fecha_inicio, r_usu_cli.tipo_mensual, r_usu_cli.values_mes, r_usu_cli.hora, r_usu_cli.dia_1, r_usu_cli.dia_2, r_usu_cli.dia_3,
-                r_usu_cli.dia_4, r_usu_cli.dia_5, r_usu_cli.dia_6, r_usu_cli.dia_7, r_usu_cli.hora_reparto, r_usu_cli.token AS token_asi,
-                CASE
-                    WHEN r_usu_cli.estado > 0 THEN 1
-                    WHEN r_usu_cli_hist.id IS NOT NULL THEN 0
-                END  AS estado_asi
-
-             FROM clientes
-             LEFT JOIN clientes cli_fac ON clientes.fk_entidad = ".$entityId." AND clientes.fk_cliente_facturacion = cli_fac.pk_cliente AND cli_fac.estado > 0
-             LEFT JOIN r_usu_cli_hist ON 0 = ".$state." AND r_usu_cli_hist.fk_entidad = ".$entityId." AND  clientes.pk_cliente = r_usu_cli_hist.fk_cliente AND r_usu_cli_hist.fk_usuario = '".$userPk."' AND r_usu_cli_hist.updated_at > '".$lastTimeStamp."' /* 13_09_2014 Esta tabla no esta dentro del SELECT y no nos interesa mostrarla sus resultado coincidentes si no ha sido creada despues de la ultima actualizacion */
-             LEFT JOIN r_usu_cli ON r_usu_cli.fk_entidad = ".$entityId." AND clientes.pk_cliente = r_usu_cli.fk_cliente  AND r_usu_cli.estado >= ".$state." AND (fk_usuario_vendedor = '".$userPk."' OR fk_usuario_repartidor = '".$userPk."')
-             LEFT JOIN visita ON visita.fk_entidad = ".$entityId." AND clientes.pk_cliente = visita.fk_cliente AND fk_vendedor_reasignado = '".$userPk."' AND visita.estado > 0 AND visita.fecha_visita >= CURDATE()
-             LEFT JOIN albaranes_cab ON albaranes_cab.fk_entidad = ".$entityId." AND clientes.pk_cliente = albaranes_cab.fk_cliente AND albaranes_cab.estado > 0 AND albaranes_cab.fecha_entrega >= CURDATE() AND albaranes_cab.updated_at > '".$lastTimeStamp."' AND (fk_repartidor = '".$userPk."' OR fk_repartidor_reasignado = '".$userPk."')
-             WHERE clientes.bool_es_captacion = 0
-             AND clientes.fk_entidad = ".$entityId." AND (clientes.bool_asignacion_generica = 1 OR r_usu_cli.pk_usuario_cliente IS NOT NULL  OR visita.id IS NOT NULL  OR r_usu_cli_hist.id IS NOT NULL OR albaranes_cab.pk_albaran IS NOT NULL )
-             AND (r_usu_cli.updated_at > '".$lastTimeStamp."' OR cli_fac.updated_at > '".$lastTimeStamp."' OR r_usu_cli.updated_vendedor_at > '".$lastTimeStamp."' OR r_usu_cli.updated_repartidor_at > '".$lastTimeStamp."' OR clientes.updated_at > '".$lastTimeStamp."' OR visita.updated_vendedor_at > '".$lastTimeStamp."' OR albaranes_cab.updated_repartidor_at > '".$lastTimeStamp."' OR r_usu_cli_hist.updated_at > '".$lastTimeStamp."')
-             AND clientes.estado >= ".$state." AND (".$state."=0 OR clientes.fecha_baja IS NULL OR clientes.fecha_baja > NOW())";
-
-        return $q;
-
-
-    }
-
-    /**
-     * Devuelve un cliente a partir de su token
-     *
-     * @param $clientToken
-     * @return mixed
-     */
-    function getClientByToken($clientToken) {
-        $this->db->where('token', $clientToken);
-        $query = $this->db->get('clientes');
-
-        $cliente = $query->row(0, 'cliente');
-        return $cliente;
-    }
 
     /**
      * Devuelve los clientes de una entidad

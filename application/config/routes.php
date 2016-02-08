@@ -38,6 +38,10 @@
 |
 */
 
+
+$route['usuarios'] = "usuarios/index";
+$route['clientes'] = "clientes/index";
+
 $route['default_controller'] = "doc/doc";
 $route['404_override'] = '';
 
