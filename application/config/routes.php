@@ -38,9 +38,11 @@
 |
 */
 
-
-$route['usuarios'] = "usuarios/index";
-$route['clientes'] = "clientes/index";
+//$route['usuarios/(:any)/prueba/(:any)'] = "usuarios/index/index/$1/$2";
+$route['usuarios/(:any)'] = "usuarios/index/index/$1";
+$route['usuarios'] = "usuarios/index/index";
+$route['clientes/(:any)'] = "clientes/index/index/$1";
+$route['clientes'] = "clientes/index/index";
 
 $route['default_controller'] = "doc/doc";
 $route['404_override'] = '';

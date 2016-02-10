@@ -48,6 +48,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('INVALID_NUMBER_OF_PARAMS', 1000);
 define('INVALID_NUMBER_OF_HEADER_PARAMS', 1001);
 define('ERROR_SAVING_DATA', 2000);
+define('INVALID_PROPERTY_NAME', 2001);
 define('INVALID_TOKEN', 3000);
 define('PARAM_VERIFICATION_ERROR', 4000);
 define('FBID_VERIFICATION_ERROR', 4001);
@@ -127,12 +128,16 @@ define('AMAZON_BASE_URL', 'https://s3.amazonaws.com/efinanzas/');
 */
 define('MAX_PASSWORD_LENGTH', 72);
 define('ENTITY_APIERROR', '/entities/APIerror.php');
+define('ENTITY_APIEXCEPTION', '/entities/APIexception.php');
 define('ENTITY_ESOCIAL_ENTITY', '/entities/eEntity.php');
 define('VALLAS_BASE_CONTROLLER', '/controllers/vallas_controller.php');
 define('ENTITY_SESSION', '/entities/session.php');
 define('ENTITY_USER', '/entities/user.php');
 define('ENTITY_CLIENTE', '/entities/cliente.php');
 
+
+
+define('GENERIC_MODEL', '/models/generic_model.php');
 
 
 /*

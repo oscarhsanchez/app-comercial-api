@@ -15,6 +15,7 @@ class APIerror{
 	    	1000  => "Invalid Number of Params",
 	    	1001  => "Invalid Number of Header Params",
 	    	2000  => "Error Saving Data",
+            2001  => "Invalid Property Name",
 	    	3000  => "Invalid Access Token",
 	    	4000  => "Param verification Error",
 	    	4001  => "FBID verification Error",

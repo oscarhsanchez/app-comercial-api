@@ -22,9 +22,20 @@ class index extends ef_controller {
     public function index_get()
     {
 
+
         $this->checkSecurity(__FUNCTION__);
 
-        $this->response(array('result' => 'OK', 'usuarios' => __FUNCTION__), 200);
+        $offset = $this->get("offset");
+        $limit = $this->get("limit");
+
+        try {
+            $result = $this->cliente_model->getAll($this->get(), $offset, $limit, $this->session->fk_pais);
+            $this->response(array('result' => 'OK', 'clientes' => $result), 200);
+        } catch (\Exception $e) {
+            $err = new APIerror(INVALID_PROPERTY_NAME);
+            $result = $err->getValues();
+            $this->response(array('error' => $result), 200);
+        }
 
 
     }

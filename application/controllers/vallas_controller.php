@@ -18,9 +18,9 @@ class ef_controller extends REST_Controller
         $this->access_token = $this->input->get_request_header('Authorization', TRUE);
 
         $params = array(get_called_class(), $action);
-        $this->load->library('Reader', $params);
+        $this->load->library('Reader', $params, "SecurityReader");
 
-        $security = $this->reader->getParameter("RequiresPermission");
+        $security = $this->SecurityReader->getParameter("RequiresPermission");
 
         if ($security) {
 
