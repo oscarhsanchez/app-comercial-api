@@ -32,7 +32,7 @@ class Jasper {
         try {
             $this->rest = new JasperRest($this->host, $cookiePath);
 
-            // Do login if user and password are passed to the constructor
+            // Do login if User and password are passed to the constructor
             if ($user !== null && $pass !== null) {
                 $this->login();
             }

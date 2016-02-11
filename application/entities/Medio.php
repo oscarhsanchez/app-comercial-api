@@ -2,25 +2,25 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class Agencia extends eEntity {
+class Medio extends eEntity {
 
-    public $pk_agencia;
+    public $pk_medio;
     public $fk_pais;
-    public $fk_empresa;
-    public $razon_social;
-    public $nombre_comercial;
-    public $porcentaje_comision;
-    public $dias_credito;
-    public $credito_maximo;
-    public $estatus;
+    public $fk_ubicacion;
+    public $fk_subtipo;
+    public $posicion;
+    public $id_cara;
+    public $tipo_medio;
+    public $estatus_iluminacion;
+    public $estatus_inventario;
     public $estado;
+    public $token;
     public $created_at;
     public $updated_at;
-    public $token;
 
 
 	public function getPK() {
-		return array ("pk_agencia");
+		return array ("pk_medio");
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
@@ -29,7 +29,7 @@ class Agencia extends eEntity {
 	}
 
 	public function getTableName() {
-		return "agencias";
+		return "medios";
 	}
 
 }

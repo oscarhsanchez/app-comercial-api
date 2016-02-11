@@ -1323,7 +1323,7 @@ abstract class BaseFacebook
   /**
    * Analyzes the supplied result to see if it was thrown
    * because the access token is no longer valid.  If that is
-   * the case, then we destroy the session.
+   * the case, then we destroy the Session.
    *
    * @param array $result A record storing the error message returned
    *                      by a failed API call.
@@ -1398,7 +1398,7 @@ abstract class BaseFacebook
   }
 
   /**
-   * Destroy the current session
+   * Destroy the current Session
    */
   public function destroySession() {
     $this->accessToken = null;

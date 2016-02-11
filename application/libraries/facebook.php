@@ -29,13 +29,13 @@ class Facebook extends BaseFacebook
   const FBSS_COOKIE_NAME = 'fbss';
 
   /**
-   * We can set this to a high number because the main session
+   * We can set this to a high number because the main Session
    * expiration will trump this.
    */
   const FBSS_COOKIE_EXPIRE = 31556926; // 1 year
 
   /**
-   * Stores the shared session ID if one is set.
+   * Stores the shared Session ID if one is set.
    *
    * @var string
    */
@@ -43,13 +43,13 @@ class Facebook extends BaseFacebook
 
   /**
    * Identical to the parent constructor, except that
-   * we start a PHP session to store the usuarios ID and
+   * we start a PHP Session to store the usuarios ID and
    * access token if during the course of execution
    * we discover them.
    *
    * @param array $config the application configuration. Additionally
    * accepts "sharedSession" as a boolean to turn on a secondary
-   * cookie for environments with a shared session (that is, your app
+   * cookie for environments with a shared Session (that is, your app
    * shares the domain with other apps).
    *
    * @see BaseFacebook::__construct
@@ -113,7 +113,7 @@ class Facebook extends BaseFacebook
     } else {
       // @codeCoverageIgnoreStart
       self::errorLog(
-        'Shared session ID cookie could not be set! You must ensure you '.
+        'Shared Session ID cookie could not be set! You must ensure you '.
         'create the Facebook instance before headers have been sent. This '.
         'will cause authentication issues after the first request.'
       );
@@ -191,7 +191,7 @@ class Facebook extends BaseFacebook
   }
 
   /**
-   * Deletes Shared session cookie
+   * Deletes Shared Session cookie
    */
   protected function deleteSharedSessionCookie() {
     $cookie_name = $this->getSharedSessionCookieName();
@@ -201,21 +201,21 @@ class Facebook extends BaseFacebook
   }
 
   /**
-   * Returns the Shared session cookie name
+   * Returns the Shared Session cookie name
    *
-   * @return string The Shared session cookie name
+   * @return string The Shared Session cookie name
    */
   protected function getSharedSessionCookieName() {
     return self::FBSS_COOKIE_NAME . '_' . $this->getAppId();
   }
 
   /**
-   * Constructs and returns the name of the session key.
+   * Constructs and returns the name of the Session key.
    *
    * @see setPersistentData()
-   * @param string $key The key for which the session variable name to construct.
+   * @param string $key The key for which the Session variable name to construct.
    *
-   * @return string The name of the session key.
+   * @return string The name of the Session key.
    */
   protected function constructSessionVariableName($key) {
     $parts = array('fb', $this->getAppId(), $key);

@@ -2,7 +2,7 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class user extends eEntity {
+class User extends eEntity {
 
     public $id;
     public $username;

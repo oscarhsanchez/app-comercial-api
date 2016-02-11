@@ -6,7 +6,7 @@ require_once(APPPATH.GENERIC_MODEL);
 /**
  *
  * @Table "user"
- * @Entity "user"
+ * @Entity "User"
  * @Country false
  *
  */
@@ -21,7 +21,7 @@ class user_model extends generic_model {
 		$this->db->where('id', $userId);
 		$query = $this->db->get('user');
 
-		$user = $query->row(0, 'user');
+		$user = $query->row(0, 'User');
 		return $user;
 	}
 
@@ -29,7 +29,7 @@ class user_model extends generic_model {
         $this->db->where('username', $userName);
         $query = $this->db->get('user');
 
-        $user = $query->row(0, 'user');
+        $user = $query->row(0, 'User');
         return $user;
     }
 
@@ -38,7 +38,7 @@ class user_model extends generic_model {
         $this->db->where('password', $pass);
         $query = $this->db->get('user');
 
-        $user = $query->row(0, 'user');
+        $user = $query->row(0, 'User');
         return $user;
     }
 

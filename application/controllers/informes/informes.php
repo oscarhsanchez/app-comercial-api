@@ -7,7 +7,7 @@ require_once(APPPATH.ENTITY_APIERROR);
 require_once(APPPATH.ENTITY_DEVICE);
 
 
-class informes extends ef_controller
+class informes extends generic_controller
 {
     public $controller = "eFinanzas-ArticuloBundle-Controller-DefaultController";
 

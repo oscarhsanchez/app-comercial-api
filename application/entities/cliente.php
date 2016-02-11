@@ -2,7 +2,7 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class cliente extends eEntity {
+class Cliente extends eEntity {
 
     public $pk_cliente;
     public $fk_pais;

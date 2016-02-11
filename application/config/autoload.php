@@ -49,7 +49,7 @@ $autoload['packages'] = array(APPPATH.'entities/entity');
 |
 | Prototype:
 |
-|	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
+|	$autoload['libraries'] = array('database', 'Session', 'xmlrpc');
 */
 
 $autoload['libraries'] = array('database', 's3', 'esocialmemcache');

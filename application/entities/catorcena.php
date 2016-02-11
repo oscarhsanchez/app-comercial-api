@@ -2,7 +2,7 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class catorcena extends eEntity {
+class Catorcena extends eEntity {
 
     public $id;
     public $anio;

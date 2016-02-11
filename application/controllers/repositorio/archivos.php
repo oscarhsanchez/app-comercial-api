@@ -7,7 +7,7 @@ require_once(APPPATH.ENTITY_APIERROR);
 require_once(APPPATH.ENTITY_CLIENT);
 require_once(APPPATH.ENTITY_REPO_ARCHIVO);
 
-class archivos extends ef_controller {
+class archivos extends generic_controller {
     public $controller = "eFinanzas-EntidadBundle-Controller-DefaultController";
 
     function __construct() {

@@ -489,7 +489,7 @@ class CI_Profiler {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Compile session userdata
+	 * Compile Session userdata
 	 *
 	 * @return 	string
 	 */

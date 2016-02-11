@@ -1,7 +1,7 @@
 <?php
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class pais extends eEntity {
+class Pais extends eEntity {
 
     public $pk_pais_entidad;
     public $fk_entidad;

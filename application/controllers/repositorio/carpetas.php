@@ -7,7 +7,7 @@ require_once(APPPATH.ENTITY_APIERROR);
 require_once(APPPATH.ENTITY_CLIENT);
 require_once(APPPATH.ENTITY_REPO_CARPETA);
 
-class carpetas extends ef_controller {
+class carpetas extends generic_controller {
     public $controller = "eFinanzas-EntidadBundle-Controller-DefaultController";
 
     function __construct() {

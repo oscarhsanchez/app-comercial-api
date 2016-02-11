@@ -1,7 +1,7 @@
 <?php
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class session extends eEntity {
+class Session extends eEntity {
 
     public $id;
     public $fk_user;

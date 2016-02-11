@@ -72,6 +72,8 @@ define('NO_LINES_DEFINED', 4018);
 define('ERROR_SENDING_MAIL', 4019);
 define('ACCESS_FORBIDEN', 5000);
 define('ERROR_GETTING_INFO', 6000);
+define('ERROR_GETTING_INFO_FROM_MEMCACHE', 6001);
+define('ERROR_MAX_PAGINATION_SIZE', 6002);
 
 
 /*
@@ -130,10 +132,10 @@ define('MAX_PASSWORD_LENGTH', 72);
 define('ENTITY_APIERROR', '/entities/APIerror.php');
 define('ENTITY_APIEXCEPTION', '/entities/APIexception.php');
 define('ENTITY_ESOCIAL_ENTITY', '/entities/eEntity.php');
-define('VALLAS_BASE_CONTROLLER', '/controllers/vallas_controller.php');
-define('ENTITY_SESSION', '/entities/session.php');
-define('ENTITY_USER', '/entities/user.php');
-define('ENTITY_CLIENTE', '/entities/cliente.php');
+define('VALLAS_BASE_CONTROLLER', '/controllers/generic_controller.php');
+define('ENTITY_SESSION', '/entities/Session.php');
+define('ENTITY_USER', '/entities/User.php');
+define('ENTITY_CLIENTE', '/entities/Cliente.php');
 
 
 

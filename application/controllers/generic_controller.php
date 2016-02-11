@@ -6,9 +6,7 @@ require_once(APPPATH.LIBRARY_RESTJSON);
 require_once(APPPATH.ENTITY_APIERROR);
 require_once(APPPATH.ENTITY_SESSION);
 
-class ef_controller extends REST_Controller
-{
-
+class generic_controller extends REST_Controller {
 
     public $access_token;
     public $session;
@@ -32,7 +30,7 @@ class ef_controller extends REST_Controller
 
             }
 
-            //Obtenemos el la session de Memcache
+            //Obtenemos el la Session de Memcache
             $session = $this->esocialmemcache->get($this->access_token);
 
             if ($session) {
@@ -40,7 +38,7 @@ class ef_controller extends REST_Controller
 
                 //Validamos los permisos
                 if ($this->security_model->hasPermission(explode(",", $security[1]), $security[0], $this->session->fk_user, $this->session->getRoles()))    {
-                    //Actualizamos la session
+                    //Actualizamos la Session
                     $this->esocialmemcache->set($this->access_token, serialize($this->session), false, SESSION_TIMEOUT);
 
                 } else {
@@ -62,12 +60,12 @@ class ef_controller extends REST_Controller
     }
 
     protected function validateParams($received, $parametros) {
-    foreach ($parametros as $param) {
-        if (!isset($received[$param])) {
-            return false;
+        foreach ($parametros as $param) {
+            if (!isset($received[$param])) {
+                return false;
+            }
         }
+        return true;
     }
-    return true;
-}
 
 }

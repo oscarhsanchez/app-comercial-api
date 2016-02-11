@@ -38,7 +38,9 @@ class APIerror{
             4018  => "No Lines defined for Document",
             4019  => "Error Sending mail.",
 	    	5000  => "Access Forbiden",
-	    	6000  => "Error getting information requested"
+	    	6000  => "Error getting information requested",
+            6001  => "Error getting information from memcache",
+            6002  => "Error exceeded max pagination size"
 
 		);
 

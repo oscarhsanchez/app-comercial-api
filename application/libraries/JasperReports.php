@@ -137,9 +137,9 @@ class JasperReports {
 
     public function prepareAutocompleteFields($post=array()){
 
-        //Esta funcion es para que en los casos de los campos proveedor / cliente / articulo, en los que siempre trae valores multiples, transformemos los valores separados por comas, en un array
+        //Esta funcion es para que en los casos de los campos proveedor / Cliente / articulo, en los que siempre trae valores multiples, transformemos los valores separados por comas, en un array
 
-        $fields = array("proveedor", "cliente", "articulo");
+        $fields = array("proveedor", "Cliente", "articulo");
 
         foreach($fields as $f){
             $arr = array();

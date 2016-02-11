@@ -7,7 +7,7 @@ require_once(APPPATH.GENERIC_MODEL);
 /**
  *
  * @Table "clientes"
- * @Entity "cliente"
+ * @Entity "Cliente"
  * @Country true
  *
  */

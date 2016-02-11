@@ -61,7 +61,7 @@ class login extends REST_Controller
                     $new_session = $this->session_model->createSession($user->id, $user->roles, $countryId, $deviceId);
                     $this->user_model->updateLastLogin($user->id);
                     $this->esocialmemcache->set($new_session->access_token, serialize($new_session), false, SESSION_TIMEOUT);
-                    $this->response(array('result' => 'OK', 'session' => $new_session), 200);
+                    $this->response(array('result' => 'OK', 'Session' => $new_session), 200);
                 } else {
                     $err = new APIerror(INVALID_USERNAME_OR_PASS);
                     $result = $err->getValues();
@@ -76,7 +76,7 @@ class login extends REST_Controller
                 if ($new_session) {
                     $this->user_model->updateLastLogin($current_session->fk_user);
                     $this->esocialmemcache->set($new_session->access_token, serialize($new_session), false, SESSION_TIMEOUT);
-                    $this->response(array('result' => 'OK', 'session' => $new_session), 200);
+                    $this->response(array('result' => 'OK', 'Session' => $new_session), 200);
                 } else {
                     $err = new APIerror(INVALID_TOKEN);
                     $result = $err->getValues();

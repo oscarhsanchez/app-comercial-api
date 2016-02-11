@@ -56,9 +56,9 @@ class CI_Cart {
 		}
 
 		// Load the Sessions class
-		$this->CI->load->library('session', $config);
+		$this->CI->load->library('Session', $config);
 
-		// Grab the shopping cart array from the session table, if it exists
+		// Grab the shopping cart array from the Session table, if it exists
 		if ($this->CI->session->userdata('cart_contents') !== FALSE)
 		{
 			$this->_cart_contents = $this->CI->session->userdata('cart_contents');
@@ -76,7 +76,7 @@ class CI_Cart {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Insert items into the cart and save it to the session table
+	 * Insert items into the cart and save it to the Session table
 	 *
 	 * @access	public
 	 * @param	array
@@ -361,7 +361,7 @@ class CI_Cart {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Save the cart array to the session DB
+	 * Save the cart array to the Session DB
 	 *
 	 * @access	private
 	 * @return	bool
@@ -394,7 +394,7 @@ class CI_Cart {
 		$this->_cart_contents['total_items'] = $items;
 		$this->_cart_contents['cart_total'] = $total;
 
-		// Is our cart empty?  If so we delete it from the session
+		// Is our cart empty?  If so we delete it from the Session
 		if (count($this->_cart_contents) <= 2)
 		{
 			$this->CI->session->unset_userdata('cart_contents');
@@ -529,7 +529,7 @@ class CI_Cart {
 	/**
 	 * Destroy the cart
 	 *
-	 * Empties the cart and kills the session
+	 * Empties the cart and kills the Session
 	 *
 	 * @access	public
 	 * @return	null

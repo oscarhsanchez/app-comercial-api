@@ -4,18 +4,18 @@ require_once(APPPATH.ENTITY_SESSION);
 
 class session_model extends CI_Model {
     /**
-     * Crea una nueva session.
+     * Crea una nueva Session.
      *
      * @param $userId
      * @param $countryId
      * @param $phoneId
-     * @return null|session
+     * @return null|Session
      */
     function createSession($userId, $roles, $countryId, $phoneId) {
 		$token = sha1($userId.$countryId.time().TOKEN_SALT_KEY);
         $renew_token = sha1($userId.$countryId.time().RENEW_SALT_KEY);
 
-		$sesion = new session();
+		$sesion = new Session();
         $sesion->fk_user = $userId;
         $sesion->fk_pais = $countryId;
         $sesion->roles = $roles;
@@ -58,23 +58,23 @@ class session_model extends CI_Model {
     function getSessionByAccesToken($accessToken, $deviceId) {
         $this->db->where('access_token', $accessToken);
         $this->db->where('phone_id', $deviceId);
-        $query = $this->db->get('session');
+        $query = $this->db->get('Session');
 
-        $session = $query->row(0, 'session');
+        $session = $query->row(0, 'Session');
         return $session;
     }
 
     /**
-     * Renueva una session a partir del token de renovacion.
+     * Renueva una Session a partir del token de renovacion.
      *
      * @param $userId
      * @param $phoneId
      * @param $countryId
      * @param $renewToken
-     * @return session|null
+     * @return Session|null
      */
     function renewSession($userId, $roles, $countryId, $phoneId, $renewToken) {
-		$q = "SELECT renew_token FROM session WHERE fk_user = '$userId' AND fk_pais = '$countryId' AND phone_id = '$phoneId' ORDER BY created_at DESC";
+		$q = "SELECT renew_token FROM Session WHERE fk_user = '$userId' AND fk_pais = '$countryId' AND phone_id = '$phoneId' ORDER BY created_at DESC";
         $query = $this->db->query($q);
 
         $result = $query->row();

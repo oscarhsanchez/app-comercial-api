@@ -7,7 +7,7 @@ require_once(APPPATH.ENTITY_CLIENTE);
 
 
 
-class index extends ef_controller {
+class index extends generic_controller {
    	
     function __construct() {
         parent::__construct();
@@ -27,9 +27,10 @@ class index extends ef_controller {
 
         $offset = $this->get("offset");
         $limit = $this->get("limit");
+        $pagination = $this->get("pagination");
 
         try {
-            $result = $this->cliente_model->getAll($this->get(), $offset, $limit, $this->session->fk_pais);
+            $result = $this->cliente_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $pagination);
             $this->response(array('result' => 'OK', 'clientes' => $result), 200);
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);

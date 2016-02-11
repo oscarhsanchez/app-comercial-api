@@ -4,7 +4,7 @@
 require_once(APPPATH.VALLAS_BASE_CONTROLLER);
 
 
-class index extends ef_controller
+class index extends generic_controller
 {
 
 
@@ -25,9 +25,10 @@ class index extends ef_controller
 
         $offset = $this->get("offset");
         $limit = $this->get("limit");
+        $pagination = $this->get("pagination");
 
         try {
-            $users = $this->user_model->getAll($this->get(), $offset, $limit, $this->session->fk_pais);
+            $users = $this->user_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $pagination);
             $this->response(array('result' => 'OK', 'usuarios' => $users), 200);
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
