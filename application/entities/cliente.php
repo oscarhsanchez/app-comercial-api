@@ -7,7 +7,7 @@ class Cliente extends eEntity {
     public $pk_cliente;
     public $fk_pais;
     public $fk_empresa;
-    public $fk_user;
+    public $codigo_user;
     public $rfc;
     public $razon_social;
     public $nombre_comercial;

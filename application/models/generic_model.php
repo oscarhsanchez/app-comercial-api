@@ -38,17 +38,15 @@ class generic_model extends CI_Model {
     /**
      * Devuelve los articulos de una entidad
      *
-     * @param $entityId
-     * @param $state
+     * @param $countryId
      * @param $offset (Opcional)
      * @param $limit (Opcional)
-     * @param $subfamiliaPk (Opcional)
-     * @param $desc (Opcional)
-     * @param $codigo (Opcional)
-     * @param $ean (Opcional)
-     * @return array
+     * @param $sort (Opcional)
+     * @param $pagination (Opcional)
+     *
+     * @return pagination, array
      */
-    function getAll($get_vars, $countryId=0, $offset, $limit, $pagination) {
+    function getAll($get_vars, $countryId=0, $offset, $limit, $sort, $pagination) {
 
         if (isset($pagination->active) && $pagination->active && isset($pagination->cache_token)) {
             $key = $pagination->cache_token . "-" . $pagination->page;
@@ -60,35 +58,50 @@ class generic_model extends CI_Model {
                 $this->db->where('fk_pais', $countryId);
 
             if ($get_vars && is_array($get_vars)) {
-                foreach ($get_vars as $var) {
-                    $keys = array_keys($get_vars);
-                    foreach($keys as $key){
-                        if ($key != "offset" && $key != "limit") {
-                            if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
-                                $value = html_entity_decode($get_vars[$key]);
-                                echo $get_vars[$key];
-                                if (startsWith($value, "(") && endsWith($value, ")")) {
-                                    $arr = explode(",", get_string_between($value, "(", ")"));
-                                    $this->db->where_in($key, $arr);
-                                }
-                                elseif (startsWith($value, "%[") && endsWith($value, "]%"))
-                                    $this->db->like($key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
-                                elseif (startsWith($value, "%["))
-                                    $this->db->like($key, str_replace("%[", "", $value), 'before');
-                                elseif (endsWith($value, "]%"))
-                                    $this->db->like($key, str_replace("]%", "", $value), 'after');
-                                else
-                                    $this->db->where($key, $value);
-                            } else
-                                throw new APIexception("Property not defined on Entity", ERROR_GETTING_INFO, $key);
-                        }
+
+                $keys = array_keys($get_vars);
+                foreach($keys as $key){
+                    if ($key != "offset" && $key != "limit" && $key != "sort" && $key != "pagination") {
+                        if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
+                            $value = html_entity_decode($get_vars[$key]);
+                            if (startsWith($value, "(") && endsWith($value, ")")) {
+                                $arr = explode(",", get_string_between($value, "(", ")"));
+                                $this->db->where_in($key, $arr);
+                            }
+                            elseif (startsWith($value, "%[") && endsWith($value, "]%"))
+                                $this->db->like($key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
+                            elseif (startsWith($value, "%["))
+                                $this->db->like($key, str_replace("%[", "", $value), 'before');
+                            elseif (endsWith($value, "]%"))
+                                $this->db->like($key, str_replace("]%", "", $value), 'after');
+                            else
+                                $this->db->where($key, $value);
+                        } else
+                            throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
                     }
                 }
+
             }
+
 
             $offset = intval($offset);
             if (is_int($offset) && $limit)
                 $this->db->limit($limit, $offset);
+
+            if ($sort) {
+                $sortArr = explode(",", get_string_between($sort, "[", "]"));
+                foreach ($sortArr as $sort) {
+                    if (endsWith(strtolower($sort), "_desc")) {
+                        if (is_array($this->entity_properties_name) && !in_array(str_replace("_desc", "",strtolower(trim($sort))), $this->entity_properties_name))
+                            throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, $key);
+                        $this->db->order_by(str_replace("_desc", "",strtolower(trim($sort))), "desc");
+                    } else {
+                        if (is_array($this->entity_properties_name) && !in_array(str_replace("_asc", "",strtolower(trim($sort))), $this->entity_properties_name))
+                            throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, $key);
+                        $this->db->order_by(str_replace("_asc", "",strtolower(trim($sort))), "asc");
+                    }
+                }
+            }
 
             $query = $this->db->get($this->table);
             if ($this->entity)
@@ -121,9 +134,123 @@ class generic_model extends CI_Model {
 
             }
 
-            return array("pagination" => $pagination, "result" => $result?$result:array());
+        }
+
+        return array("pagination" => $pagination, "result" => $result?$result:array());
+    }
+
+    function update($get_vars, $put_vars, $countryId) {
+
+        if ($this->requires_country && $countryId)
+            $this->db->where('fk_pais', $countryId);
+
+        $keys = array_keys($get_vars);
+        foreach($keys as $key){
+
+            if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
+                $value = html_entity_decode($get_vars[$key]);
+                if (startsWith($value, "(") && endsWith($value, ")")) {
+                    $arr = explode(",", get_string_between($value, "(", ")"));
+                    $this->db->where_in($key, $arr);
+                }
+                elseif (startsWith($value, "%[") && endsWith($value, "]%"))
+                    $this->db->like($key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
+                elseif (startsWith($value, "%["))
+                    $this->db->like($key, str_replace("%[", "", $value), 'before');
+                elseif (endsWith($value, "]%"))
+                    $this->db->like($key, str_replace("]%", "", $value), 'after');
+                else
+                    $this->db->where($key, $value);
+            } else
+                throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
 
         }
+
+        $data = array();
+
+        $keys = array_keys($put_vars);
+        foreach($keys as $key){
+
+            if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
+                $data[$key] = $value = $put_vars[$key];
+            }
+
+        }
+
+        return $this->db->update($this->table, $data);
+
+
+    }
+
+    function create($entity, $array, $countryId) {
+
+        if (!$entity && !$array)
+            throw new APIexception("Missing mandatory parameter", INVALID_NUMBER_OF_PARAMS, "");
+
+        if ($this->requires_country) {
+            if ($countryId)
+                $this->db->set("fk_pais", $countryId);
+            else {
+                throw new APIexception("Missing mandatory countryId", INVALID_NUMBER_OF_PARAMS, "");
+            }
+        }
+
+        //Comprobamos loa campos
+        if ($entity) {
+            $properties = get_object_vars($entity);
+            foreach ($properties as $name => $value) {
+                if (!in_array($name, $this->entity_properties_name))
+                    throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $name);
+            }
+        } else {
+            foreach ($array as $entity) {
+                $properties = get_object_vars($entity);
+                foreach ($properties as $name => $value) {
+                    if (!in_array($name, $this->entity_properties_name))
+                        throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $name);
+                }
+            }
+        }
+
+        if ($array)
+            return $this->db->insert_batch($this->table, $array);
+        else
+            return $this->db->insert($this->table, $entity);
+
+    }
+
+    function delete($get_vars, $countryId) {
+        if ($this->requires_country && $countryId)
+            $this->db->where('fk_pais', $countryId);
+
+        $keys = array_keys($get_vars);
+        foreach($keys as $key){
+
+            if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
+                $value = html_entity_decode($get_vars[$key]);
+                if (startsWith($value, "(") && endsWith($value, ")")) {
+                    $arr = explode(",", get_string_between($value, "(", ")"));
+                    $this->db->where_in($key, $arr);
+                }
+                elseif (startsWith($value, "%[") && endsWith($value, "]%"))
+                    $this->db->like($key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
+                elseif (startsWith($value, "%["))
+                    $this->db->like($key, str_replace("%[", "", $value), 'before');
+                elseif (endsWith($value, "]%"))
+                    $this->db->like($key, str_replace("]%", "", $value), 'after');
+                else
+                    $this->db->where($key, $value);
+            } else
+                throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
+
+        }
+
+        $data = array();
+        $data["estado"] = 0;
+
+        return $this->db->update($this->table, $data);
+
+
     }
 
 }

@@ -15,6 +15,14 @@ class index extends generic_controller
     }
 
     /**
+     * Example Like : field1 = [%search%] & field2 = [%search & field3 = search%]
+     *
+     * @header Authorization
+     *
+     * @param offset (Opcional)
+     * @param limit (Opcional)
+     * @param sort (Opcional) : [field1_ASC, field2_DESC]
+     * @param pagination (Opcional): {"active":1, "pageSize": 200, "page":0, "totalPages":null, "cache_token":null}
      *
      * @RequiresPermission ["users", "R"]
      *
@@ -25,11 +33,15 @@ class index extends generic_controller
 
         $offset = $this->get("offset");
         $limit = $this->get("limit");
-        $pagination = $this->get("pagination");
+        $sort = $this->get("sort");
+        $pagination = json_decode($this->get('pagination'));
 
         try {
-            $users = $this->user_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $pagination);
-            $this->response(array('result' => 'OK', 'usuarios' => $users), 200);
+            $result = $this->user_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
+            if ($result["pagination"])
+                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'users' => $result["result"]), 200);
+            else
+                $this->response(array('result' => 'OK', 'users' => $result["result"]), 200);
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
             $result = $err->getValues();
