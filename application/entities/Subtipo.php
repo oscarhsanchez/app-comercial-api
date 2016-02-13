@@ -13,7 +13,7 @@ class Subtipo extends eEntity {
 
 
 	public function getPK() {
-		return array ("pk_subtipo");
+		return "pk_subtipo";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd

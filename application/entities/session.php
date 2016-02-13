@@ -14,7 +14,7 @@ class Session extends eEntity {
     public $updated_at;
 
     public function getPK() {
-        return array ("id");
+        return "id";
     }
     public function setPK() {
         //Autonumerico

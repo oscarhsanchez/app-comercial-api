@@ -9,6 +9,8 @@ class generic_model extends CI_Model {
     private $table;
     private $entity;
     private $requires_country;
+    private $class;
+    private $autoincrement;
 
     function __construct() {
         parent::__construct();
@@ -22,10 +24,14 @@ class generic_model extends CI_Model {
         $this->table = $this->ModelReader->getParameter("Table");
         $this->entity = $this->ModelReader->getParameter("Entity");
         $this->requires_country = $this->ModelReader->getParameter("Country");
+        $this->autoincrement = $this->ModelReader->getParameter("Autoincrement");
+
+        if ($this->autoincrement)
+            $this->autoincrement = true;
 
         if ($this->entity) {
-            $class = new \ReflectionClass($this->entity);
-            $properties = $class->getProperties();
+            $this->class = new \ReflectionClass($this->entity);
+            $properties = $this->class->getProperties();
             foreach ($properties as $property) {
                 $name = $property->getName();
                 $this->entity_properties_name[] = $name;
@@ -212,10 +218,63 @@ class generic_model extends CI_Model {
             }
         }
 
-        if ($array)
+
+
+        if ($array) {
+            $this->db->trans_start();
+            foreach ($array as $entity) {
+                $dbEntity = null;
+                if (isset($entity->token))
+                    $dbEntity = $this->getByToken($entity->token, $countryId);
+
+
+                $instance = $this->class->newInstanceArgs();
+                $instance->set($entity);
+
+                if ($dbEntity) {
+                    $pk = $instance->getPK();
+                    $instance->$pk = $dbEntity->$pk;
+                }
+
+
+                if (!isset($instance->token)) {
+                    $instance->token = getToken();
+                }
+
+                $resSave = $instance->_save(false, $this->autoincrement, null);
+                if (!$resSave)
+                    return false;
+            }
+            $this->db->trans_complete();
+            return true;
+        }
+        else {
+            $dbEntity = null;
+            if (isset($entity->token))
+                $dbEntity = $this->getByToken($entity->token, $countryId);
+
+
+            $instance = $this->class->newInstanceArgs();
+            $instance->set($entity);
+
+            if ($dbEntity) {
+                $pk = $instance->getPK();
+                $instance->$pk = $dbEntity->$pk;
+            }
+
+
+            if (!isset($instance->token)) {
+                $instance->token = getToken();
+            }
+
+            return $instance->_save(false, $this->autoincrement, null);
+        }
+
+
+        /*if ($array)
             return $this->db->insert_batch($this->table, $array);
         else
-            return $this->db->insert($this->table, $entity);
+            return $this->db->insert($this->table, $entity);*/
 
     }
 
@@ -249,6 +308,21 @@ class generic_model extends CI_Model {
         $data["estado"] = 0;
 
         return $this->db->update($this->table, $data);
+
+
+    }
+
+    function getByToken($token, $countryId) {
+        if ($this->requires_country && $countryId)
+            $this->db->where('fk_pais', $countryId);
+
+        $this->db->where("token", $token);
+
+        $query = $this->db->get($this->table);
+        if ($this->entity)
+            return $query->row($this->entity);
+        else
+            return $query->row();
 
 
     }

@@ -20,7 +20,7 @@ class Gasto extends eEntity {
 
 
 	public function getPK() {
-		return array ("pk_gasto");
+		return "pk_gasto";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd

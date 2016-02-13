@@ -48,7 +48,7 @@ abstract class eEntity {
 			if ((!$ignoreNulls || ($ignoreNulls && $value != null)) && (property_exists(get_class($this), $key)) ) {
 				$sql = $sql . $key . ",";
 				$vars = $vars . "?,";
-				if (!in_array($key, $this->getPK())) $upd = $upd . $key . "=VALUES(" . $key . "), "; 
+				if ($key!=$this->getPK()) $upd = $upd . $key . "=VALUES(" . $key . "), ";
 			} else {
 				unset($prop[$key]);
 			}		
@@ -77,14 +77,14 @@ abstract class eEntity {
 		//Comprobamos si es edicion o insercion
 		$pk = $this->getPK();
 
-		foreach ($pk as $value) {
-            //La pk como es autonumrica no puede ser 0
-			if ($prop[$value] === null || $prop[$value] === 0) {
-				$isUpdate = false;
-			} else {
-				$pkCondition = $pkCondition . $value . " = " . $prop[$value] . " AND ";				
-			}
-		}
+
+        //La pk como es autonumrica no puede ser 0
+        if ($prop[$pk] === null || $prop[$pk] === 0) {
+            $isUpdate = false;
+        } else {
+            $pkCondition = $pkCondition . $pk . " = " . $prop[$pk] . " AND ";
+        }
+
 
 		//Eliminamos el ultimos AND de la condicion de la clave primaria
 		if ($pkCondition != "") {

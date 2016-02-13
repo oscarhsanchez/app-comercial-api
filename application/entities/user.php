@@ -31,7 +31,7 @@ class User extends eEntity {
     public $updated_at;
 
 	public function getPK() {
-		return array ("id");
+		return "id";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd

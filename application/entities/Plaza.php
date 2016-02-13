@@ -15,7 +15,7 @@ class Plaza extends eEntity {
 
 
 	public function getPK() {
-		return array ("pk_plaza");
+		return "pk_plaza";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd

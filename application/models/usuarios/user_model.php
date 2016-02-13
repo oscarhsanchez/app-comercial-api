@@ -8,6 +8,7 @@ require_once(APPPATH.GENERIC_MODEL);
  * @Table "user"
  * @Entity "User"
  * @Country false
+ * @Autoincrement false;
  *
  */
 class user_model extends generic_model {

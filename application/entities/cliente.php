@@ -22,7 +22,7 @@ class Cliente extends eEntity {
 		
 
 	public function getPK() {
-		return array ("pk_cliente");
+		return "pk_cliente";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd

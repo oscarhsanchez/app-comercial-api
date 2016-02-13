@@ -14,7 +14,7 @@ class Pais extends eEntity {
 
 
     public function getPK() {
-        return array ("id_pais");
+        return "id_pais";
     }
     public function setPK() {
         //Autonumerico

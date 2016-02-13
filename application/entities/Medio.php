@@ -20,7 +20,7 @@ class Medio extends eEntity {
 
 
 	public function getPK() {
-		return array ("pk_medio");
+		return "pk_medio";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd

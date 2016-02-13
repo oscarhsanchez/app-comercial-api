@@ -9,6 +9,7 @@ require_once(APPPATH.GENERIC_MODEL);
  * @Table "clientes"
  * @Entity "Cliente"
  * @Country true
+ * @Autoincrement true;
  *
  */
 class cliente_model extends generic_Model {

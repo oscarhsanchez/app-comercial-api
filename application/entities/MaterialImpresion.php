@@ -16,7 +16,7 @@ class MaterialImpresion extends eEntity {
 
 
 	public function getPK() {
-		return array ("pk_material");
+		return "pk_material";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
