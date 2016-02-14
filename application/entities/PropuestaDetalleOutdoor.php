@@ -2,20 +2,24 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class Plaza extends eEntity {
+class PropuestaDetalleOutdoor extends eEntity {
 
-    public $pk_plaza;
+    public $pk_propuesta_detalle_outdoor;
+    public $fk_propuesta_detalle;
     public $fk_pais;
-    public $fk_empresa;
-    public $nombre;
+    public $fk_medio;
+    public $posicion_medio;
+    public $moneda;
+    public $precio;
+    public $tipo_cambio;
     public $estado;
+    public $token;
     public $created_at;
     public $updated_at;
-    public $token;
 
 
 	public function getPK() {
-		return "pk_plaza";
+		return "pk_propuesta_detalle_outdoor";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
@@ -24,7 +28,7 @@ class Plaza extends eEntity {
 	}
 
 	public function getTableName() {
-		return "plazas";
+		return "propuestas_detalle_outdoor";
 	}
 
 }

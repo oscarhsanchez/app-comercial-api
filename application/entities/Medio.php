@@ -25,7 +25,7 @@ class Medio extends eEntity {
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
 	public function unSetProperties() {
-		return array ("created_at", "update_at");
+		return array ("created_at", "updated_at");
 	}
 
 	public function getTableName() {

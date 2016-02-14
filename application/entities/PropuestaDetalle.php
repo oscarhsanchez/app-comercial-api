@@ -2,25 +2,23 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class Gasto extends eEntity {
+class PropuestaDetalle extends eEntity {
 
-    public $pk_gasto;
-    public $fk_medio;
+    public $pk_propuesta_detalle;
+    public $fk_propuesta;
     public $fk_pais;
+    public $fk_plaza;
     public $unidad_negocio;
-    public $anio;
-    public $mes;
-    public $mes_numero;
-    public $departamento;
-    public $importe;
-    public $estado;
-    public $created_at;
-    public $updated_at;
-    public $token;
+    public $tipo_negociacion;
+    public $moneda;
+    public $precio;
+    public $tipo_cambio;
+    public $cantidad;
+    public $total;
 
 
 	public function getPK() {
-		return "pk_gasto";
+		return "pk_propuesta_detalle";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
@@ -29,7 +27,7 @@ class Gasto extends eEntity {
 	}
 
 	public function getTableName() {
-		return "gastos";
+		return "propuestas_detalle";
 	}
 
 }
