@@ -62,8 +62,9 @@ $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE; 
+$db['default']['stricton'] = FALSE;
 
+define('MEMCACHE_SERVER', '127.0.0.1'); //192.162.0.23
 
 /* PROD
 $db['default']['hostname'] = '192.162.12.169';

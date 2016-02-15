@@ -99,9 +99,6 @@ define('MULTIPART_CACHE_PAGINATION_MAX_SIZE', 100000);
 define('MULTIPART_CACHE_PAGINATION_EXPIRE_TIME', 4000);
 define('MULTIPART_AMH_SESSION_EXPIRE_TIME', 600);
 
-define('MEMCACHE_SERVER', '127.0.0.1'); //192.162.12.50
-
-
 //Envio SMS
 define('SMS_ACCOUNT', 'jaime.banus@rbconsulting.es');
 define('SMS_PASS', 'gabiola');
@@ -138,7 +135,12 @@ define('ENTITY_USER', '/entities/User.php');
 define('ENTITY_CLIENTE', '/entities/Cliente.php');
 define('ENTITY_UBICACION', '/entities/Ubicacion.php');
 define('ENTITY_MEDIO', '/entities/Medio.php');
-
+define('ENTITY_METADATA_REPOSITORY', '/entities/MetadataRepository.php');
+define('ENTITY_METADATA_STRUCTURE', '/entities/MetadataStructure.php');
+define('ENTITY_METADATA_INSTANCE', '/entities/MetadataInstance.php');
+define('ENTITY_METADATA_DOUBLE_VALUE', '/entities/MetadataDoubleValue.php');
+define('ENTITY_METADATA_STRING_VALUE', '/entities/MetadataStringValue.php');
+define('ENTITY_METADATA_INTEGER_VALUE', '/entities/MetadataIntegerValue.php');
 
 
 define('GENERIC_MODEL', '/models/generic_model.php');
