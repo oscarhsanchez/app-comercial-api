@@ -47,6 +47,8 @@ $route['ubicaciones/(:any)'] = "ubicaciones/index/index/$1";
 $route['ubicaciones'] = "ubicaciones/index/index";
 $route['medios/(:any)'] = "medios/index/index/$1";
 $route['medios'] = "medios/index/index";
+$route['metadata/(:any)'] = "metadata/index/index/$1";
+$route['metadata'] = "metadata/index/index";
 
 $route['default_controller'] = "doc/doc";
 $route['404_override'] = '';
