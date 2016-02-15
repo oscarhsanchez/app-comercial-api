@@ -136,6 +136,8 @@ define('VALLAS_BASE_CONTROLLER', '/controllers/generic_controller.php');
 define('ENTITY_SESSION', '/entities/Session.php');
 define('ENTITY_USER', '/entities/User.php');
 define('ENTITY_CLIENTE', '/entities/Cliente.php');
+define('ENTITY_UBICACION', '/entities/Ubicacion.php');
+define('ENTITY_MEDIO', '/entities/Medio.php');
 
 
 
