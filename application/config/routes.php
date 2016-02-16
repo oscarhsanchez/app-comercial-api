@@ -47,8 +47,19 @@ $route['ubicaciones/(:any)'] = "ubicaciones/index/index/$1";
 $route['ubicaciones'] = "ubicaciones/index/index";
 $route['medios/(:any)'] = "medios/index/index/$1";
 $route['medios'] = "medios/index/index";
-$route['metadata/(:any)'] = "metadata/index/index/$1";
-$route['metadata'] = "metadata/index/index";
+$route['metadata/ubicaciones/foursquare/venues/(:any)'] = "metadata/foursquare_venues/index/$1";
+$route['metadata/ubicaciones/foursquare/venues'] = "metadata/foursquare_venues/index";
+$route['metadata/ubicaciones/foursquare/categories/(:any)'] = "metadata/foursquare_categories/index/$1";
+$route['metadata/ubicaciones/foursquare/categories'] = "metadata/foursquare_categories/index";
+$route['catorcenas/(:any)'] = "catorcenas/index/index/$1";
+$route['catorcenas'] = "catorcenas/index/index";
+$route['gastos/(:any)'] = "gastos/index/index/$1";
+$route['gastos'] = "gastos/index/index";
+$route['parametros/(:any)'] = "parametros/index/index/$1";
+$route['parametros'] = "parametros/index/index";
+$route['agencias/(:any)'] = "agencias/index/index/$1";
+$route['agencias'] = "agencias/index/index";
+
 
 $route['default_controller'] = "doc/doc";
 $route['404_override'] = '';

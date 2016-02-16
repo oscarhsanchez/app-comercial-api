@@ -49,6 +49,8 @@ define('INVALID_NUMBER_OF_PARAMS', 1000);
 define('INVALID_NUMBER_OF_HEADER_PARAMS', 1001);
 define('ERROR_SAVING_DATA', 2000);
 define('INVALID_PROPERTY_NAME', 2001);
+define('SORT_NOT_PERMITED', 2002);
+define('MULTISEARCH_NOT_PERMITED', 2003);
 define('INVALID_TOKEN', 3000);
 define('PARAM_VERIFICATION_ERROR', 4000);
 define('FBID_VERIFICATION_ERROR', 4001);
@@ -135,12 +137,13 @@ define('ENTITY_USER', '/entities/User.php');
 define('ENTITY_CLIENTE', '/entities/Cliente.php');
 define('ENTITY_UBICACION', '/entities/Ubicacion.php');
 define('ENTITY_MEDIO', '/entities/Medio.php');
-define('ENTITY_METADATA_REPOSITORY', '/entities/MetadataRepository.php');
-define('ENTITY_METADATA_STRUCTURE', '/entities/MetadataStructure.php');
-define('ENTITY_METADATA_INSTANCE', '/entities/MetadataInstance.php');
-define('ENTITY_METADATA_DOUBLE_VALUE', '/entities/MetadataDoubleValue.php');
-define('ENTITY_METADATA_STRING_VALUE', '/entities/MetadataStringValue.php');
-define('ENTITY_METADATA_INTEGER_VALUE', '/entities/MetadataIntegerValue.php');
+define('ENTITY_METADATA_CATEGORY_FQ', '/entities/CategoryFourSquare.php');
+define('ENTITY_METADATA_VENUE_FQ', '/entities/VenueFourSquare.php');
+define('ENTITY_METADATA_CATORCENA', '/entities/Catorcena.php');
+define('ENTITY_METADATA_GASTO', '/entities/Gasto.php');
+define('ENTITY_METADATA_PLAZA', '/entities/Plaza.php');
+define('ENTITY_PARAMETRO_TPV', '/entities/ParametroTpv.php');
+define('ENTITY_AGENCIA', '/entities/Agencia.php');
 
 
 define('GENERIC_MODEL', '/models/generic_model.php');

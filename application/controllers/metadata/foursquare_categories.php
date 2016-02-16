@@ -3,20 +3,15 @@
 // This can be removed if you use __autoload() in config.php
 require_once(APPPATH.VALLAS_BASE_CONTROLLER);
 require_once(APPPATH.ENTITY_APIERROR);
-require_once(APPPATH.ENTITY_METADATA_REPOSITORY);
-require_once(APPPATH.ENTITY_METADATA_STRUCTURE);
-require_once(APPPATH.ENTITY_METADATA_INSTANCE);
-require_once(APPPATH.ENTITY_METADATA_INTEGER_VALUE);
-require_once(APPPATH.ENTITY_METADATA_STRING_VALUE);
-require_once(APPPATH.ENTITY_METADATA_DOUBLE_VALUE);
+require_once(APPPATH.ENTITY_METADATA_CATEGORY_FQ);
 
 
 
-class index extends generic_controller {
+class foursquare_categories extends generic_controller {
    	
     function __construct() {
         parent::__construct();
-        $this->load->model('metadata/metadata_model');
+        $this->load->model('metadata/fq_category_model');
     }
 
     /**
@@ -34,8 +29,6 @@ class index extends generic_controller {
      */
     public function index_get()
     {
-        $this->metadata_model->getQuery();
-        die;
 
         $this->checkSecurity(__FUNCTION__);
 
@@ -45,11 +38,11 @@ class index extends generic_controller {
         $pagination = json_decode($this->get('pagination'));
 
         try {
-            $result = $this->metadata_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
+            $result = $this->fq_category_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
             if ($result["pagination"])
-                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'metadata' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'categories' => $result["result"]), 200);
             else
-                $this->response(array('result' => 'OK', 'metadata' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'categories' => $result["result"]), 200);
 
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
@@ -88,7 +81,7 @@ class index extends generic_controller {
                 $array = json_decode(base64_decode($arrayPost));
 
 
-            $result = $this->metadata_model->create($entity, $array, $this->session->fk_pais);
+            $result = $this->fq_category_model->create($entity, $array, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -126,7 +119,7 @@ class index extends generic_controller {
                 $this->response(array('error' => $result), 200);
             }
 
-            $result = $this->metadata_model->update($this->get(), $this->put(), $this->session->fk_pais);
+            $result = $this->fq_category_model->update($this->get(), $this->put(), $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -163,7 +156,7 @@ class index extends generic_controller {
 
         try {
 
-            $result = $this->metadata_model->delete($get_vars, $this->session->fk_pais);
+            $result = $this->fq_category_model->delete($get_vars, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {

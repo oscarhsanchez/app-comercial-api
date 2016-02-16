@@ -1,14 +1,13 @@
 <?php
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class MeatadataIntegerValue extends eEntity {
+class ParametroTpv extends eEntity {
 
-    public $pk_integer_value;
+    public $id;
     public $fk_pais;
-    public $fk_repository;
-    public $fk_metadata_structure;
-    public $fk_instance;
-    public $double_value;
+    public $descripcion;
+    public $clave;
+    public $valor;
     public $estado;
     public $created_at;
     public $updated_at;
@@ -16,16 +15,18 @@ class MeatadataIntegerValue extends eEntity {
 
 
     public function getPK() {
-        return "pk_integer_value";
+        return "id";
     }
-
+    public function setPK() {
+        //Autonumerico
+    }
     //Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
     public function unSetProperties() {
         return array ("created_at", "updated_at");
     }
 
     public function getTableName() {
-        return "metadata_integer_value";
+        return "parametros_tpv";
     }
 
 } 

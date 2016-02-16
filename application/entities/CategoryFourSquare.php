@@ -2,17 +2,11 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class Gasto extends eEntity {
+class CategoryFourSquare extends eEntity {
 
-    public $pk_gasto;
-    public $fk_ubicacion;
+    public $id;
     public $fk_pais;
-    public $unidad_negocio;
-    public $anio;
-    public $mes;
-    public $mes_numero;
-    public $departamento;
-    public $importe;
+    public $name;
     public $estado;
     public $created_at;
     public $updated_at;
@@ -20,7 +14,7 @@ class Gasto extends eEntity {
 
 
 	public function getPK() {
-		return "pk_gasto";
+		return "id";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
@@ -29,7 +23,7 @@ class Gasto extends eEntity {
 	}
 
 	public function getTableName() {
-		return "gastos";
+		return "meta_ubicacion_fq_cat";
 	}
 
 }
