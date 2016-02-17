@@ -24,10 +24,9 @@ class generic_model extends CI_Model {
         $this->table = $this->ModelReader->getParameter("Table");
         $this->entity = $this->ModelReader->getParameter("Entity");
         $this->requires_country = $this->ModelReader->getParameter("Country");
-        $this->autoincrement = $this->ModelReader->getParameter("Autoincrement");
-
-        if ($this->autoincrement == true)
-            $this->autoincrement = 1;
+        $autoincrement = $this->ModelReader->getParameter("Autoincrement");
+        echo $autoincrement;
+        $this->autoincrement = $autoincrement == "true" ? 1 : 0;
 
         if ($this->entity) {
             $this->class = new \ReflectionClass($this->entity);
@@ -243,7 +242,7 @@ class generic_model extends CI_Model {
                 if (!isset($instance->token)) {
                     $instance->token = getToken();
                 }
-                echo  "autoincrement " . $this->autoincrement;
+
                 $resSave = $instance->_save(false, $this->autoincrement, null);
                 if (!$resSave)
                     return false;
