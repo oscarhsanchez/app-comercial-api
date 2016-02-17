@@ -205,12 +205,14 @@ class generic_model extends CI_Model {
 
         //Comprobamos loa campos
         if ($entity) {
+            echo "kkkkk";
             $properties = get_object_vars($entity);
             foreach ($properties as $name => $value) {
                 if (!in_array($name, $this->entity_properties_name))
                     throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $name);
             }
         } else {
+            echo "ppppp";
             foreach ($array as $entity) {
                 $properties = get_object_vars($entity);
                 foreach ($properties as $name => $value) {
