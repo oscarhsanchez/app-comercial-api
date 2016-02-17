@@ -40,8 +40,6 @@ class generic_model extends CI_Model {
 
         }
 
-
-        echo "Entitdad " . $this->entity;
     }
 
     /**
