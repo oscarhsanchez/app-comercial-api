@@ -269,7 +269,7 @@ class generic_model extends CI_Model {
             if (!isset($instance->token)) {
                 $instance->token = getToken();
             }
-
+            echo  "autoincrement " . $this->autoincrement;
             return $instance->_save(false, $this->autoincrement, null);
         }
 
