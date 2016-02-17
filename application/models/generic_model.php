@@ -26,8 +26,8 @@ class generic_model extends CI_Model {
         $this->requires_country = $this->ModelReader->getParameter("Country");
         $this->autoincrement = $this->ModelReader->getParameter("Autoincrement");
 
-        if ($this->autoincrement)
-            $this->autoincrement = true;
+        if ($this->autoincrement == true)
+            $this->autoincrement = 1;
 
         if ($this->entity) {
             $this->class = new \ReflectionClass($this->entity);
