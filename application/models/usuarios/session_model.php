@@ -58,7 +58,7 @@ class session_model extends CI_Model {
     function getSessionByAccesToken($accessToken, $deviceId) {
         $this->db->where('access_token', $accessToken);
         $this->db->where('phone_id', $deviceId);
-        $query = $this->db->get('Session');
+        $query = $this->db->get('session');
 
         $session = $query->row(0, 'Session');
         return $session;
@@ -74,7 +74,7 @@ class session_model extends CI_Model {
      * @return Session|null
      */
     function renewSession($userId, $roles, $countryId, $phoneId, $renewToken) {
-		$q = "SELECT renew_token FROM Session WHERE fk_user = '$userId' AND fk_pais = '$countryId' AND phone_id = '$phoneId' ORDER BY created_at DESC";
+		$q = "SELECT renew_token FROM session WHERE fk_user = '$userId' AND fk_pais = '$countryId' AND phone_id = '$phoneId' ORDER BY created_at DESC";
         $query = $this->db->query($q);
 
         $result = $query->row();

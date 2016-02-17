@@ -59,6 +59,8 @@ $route['parametros/(:any)'] = "parametros/index/index/$1";
 $route['parametros'] = "parametros/index/index";
 $route['agencias/(:any)'] = "agencias/index/index/$1";
 $route['agencias'] = "agencias/index/index";
+$route['briefs/(:any)'] = "briefs/index/index/$1";
+$route['briefs'] = "briefs/index/index";
 
 
 $route['default_controller'] = "doc/doc";

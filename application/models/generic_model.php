@@ -80,6 +80,8 @@ class generic_model extends CI_Model {
                                 $this->db->like($key, str_replace("%[", "", $value), 'before');
                             elseif (endsWith($value, "]%"))
                                 $this->db->like($key, str_replace("]%", "", $value), 'after');
+                            elseif ($key == "updated_at")
+                                $this->db->where("updated_at >=", $value);
                             else
                                 $this->db->where($key, $value);
                         } else
