@@ -2,20 +2,13 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class VenueFourSquare extends eEntity {
+class Archivo extends eEntity {
 
-    public $id;
+    public $pk_archivo;
     public $fk_pais;
-    public $fk_category;
-    public $fk_ubicacion:
-    public $name;
-    public $phone;
-    public $lat;
-    public $lon;
-    public $distance;
-    public $checkinscount;
-    public $userscount;
-    public $tipcount;
+    public $nombre;
+    public $path;
+    public $url;
     public $estado;
     public $created_at;
     public $updated_at;
@@ -23,7 +16,7 @@ class VenueFourSquare extends eEntity {
 
 
 	public function getPK() {
-		return "id";
+		return "pk_archivo";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
@@ -32,7 +25,7 @@ class VenueFourSquare extends eEntity {
 	}
 
 	public function getTableName() {
-		return "meta_ubicacion_fq";
+        return "archivos";
 	}
 
 }

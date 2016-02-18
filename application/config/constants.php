@@ -145,6 +145,8 @@ define('ENTITY_METADATA_PLAZA', '/entities/Plaza.php');
 define('ENTITY_PARAMETRO_TPV', '/entities/ParametroTpv.php');
 define('ENTITY_AGENCIA', '/entities/Agencia.php');
 define('ENTITY_BRIEF', '/entities/Brief.php');
+define('ENTITY_ARCHIVO', '/entities/Archivo.php');
+define('ENTITY_CONTACTO_CLIENTE', '/entities/ContactoCliente.php');
 
 
 define('GENERIC_MODEL', '/models/generic_model.php');

@@ -21,6 +21,7 @@ class Ubicacion extends eEntity {
     public $observaciones;
     public $latitud;
     public $longitud;
+    public $reserva;
     public $estado;
     public $token;
     public $created_at;

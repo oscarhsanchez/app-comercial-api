@@ -3,15 +3,15 @@
 // This can be removed if you use __autoload() in config.php
 require_once(APPPATH.VALLAS_BASE_CONTROLLER);
 require_once(APPPATH.ENTITY_APIERROR);
-require_once(APPPATH.ENTITY_CLIENTE);
+require_once(APPPATH.ENTITY_CONTACTO_CLIENTE);
 
 
 
-class index extends generic_controller {
+class contactos extends generic_controller {
    	
     function __construct() {
         parent::__construct();
-        $this->load->model('clientes/cliente_model');
+        $this->load->model('clientes/contacto_model');
     }
 
     /**
@@ -38,11 +38,11 @@ class index extends generic_controller {
         $pagination = json_decode($this->get('pagination'));
 
         try {
-            $result = $this->cliente_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
+            $result = $this->contacto_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
             if ($result["pagination"])
-                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'clientes' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'contactos' => $result["result"]), 200);
             else
-                $this->response(array('result' => 'OK', 'clientes' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'contactos' => $result["result"]), 200);
 
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
@@ -81,7 +81,7 @@ class index extends generic_controller {
                 $array = json_decode(base64_decode($arrayPost));
 
 
-            $result = $this->cliente_model->create($entity, $array, $this->session->fk_pais);
+            $result = $this->contacto_model->create($entity, $array, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -119,7 +119,7 @@ class index extends generic_controller {
                 $this->response(array('error' => $result), 200);
             }
 
-            $result = $this->cliente_model->update($this->get(), $this->put(), $this->session->fk_pais);
+            $result = $this->contacto_model->update($this->get(), $this->put(), $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -156,7 +156,7 @@ class index extends generic_controller {
 
         try {
 
-            $result = $this->cliente_model->delete($get_vars, $this->session->fk_pais);
+            $result = $this->contacto_model->delete($get_vars, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {

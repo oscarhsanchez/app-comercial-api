@@ -61,6 +61,12 @@ $route['agencias/(:any)'] = "agencias/index/index/$1";
 $route['agencias'] = "agencias/index/index";
 $route['briefs/(:any)'] = "briefs/index/index/$1";
 $route['briefs'] = "briefs/index/index";
+$route['archivos/(:any)'] = "archivos/index/index/$1";
+$route['archivos'] = "archivos/index/index";
+$route['clientes/contactos/(:any)'] = "clientes/contactos/index/$1";
+$route['clientes/contactos'] = "clientes/contactos/index";
+$route['clientes/(:any)/contactos/(:any)'] = "clientes/contactos/index/$1/$2";
+$route['clientes/(:any)/contactos'] = "clientes/contactos/index/$1";
 
 
 $route['default_controller'] = "doc/doc";

@@ -3,7 +3,7 @@
 // This can be removed if you use __autoload() in config.php
 require_once(APPPATH.VALLAS_BASE_CONTROLLER);
 require_once(APPPATH.ENTITY_APIERROR);
-require_once(APPPATH.ENTITY_CLIENTE);
+require_once(APPPATH.ENTITY_ARCHIVO);
 
 
 
@@ -11,7 +11,7 @@ class index extends generic_controller {
    	
     function __construct() {
         parent::__construct();
-        $this->load->model('clientes/cliente_model');
+        $this->load->model('archivos/archivo_model');
     }
 
     /**
@@ -24,7 +24,7 @@ class index extends generic_controller {
      * @param sort (Opcional) : [field1_ASC, field2_DESC]
      * @param pagination (Opcional): {"active":1, "pageSize": 200, "page":0, "totalPages":null, "cache_token":null}
      *
-     * @RequiresPermission ["clientes", "R"]
+     * @RequiresPermission ["archivos", "R"]
      *
      */
     public function index_get()
@@ -38,11 +38,11 @@ class index extends generic_controller {
         $pagination = json_decode($this->get('pagination'));
 
         try {
-            $result = $this->cliente_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
+            $result = $this->archivo_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
             if ($result["pagination"])
-                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'clientes' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'archivos' => $result["result"]), 200);
             else
-                $this->response(array('result' => 'OK', 'clientes' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'archivos' => $result["result"]), 200);
 
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
@@ -55,7 +55,7 @@ class index extends generic_controller {
 
     /**
      *
-     * @RequiresPermission ["clientes", "C"]
+     * @RequiresPermission ["archivos", "C"]
      *
      */
     function index_post()
@@ -81,7 +81,7 @@ class index extends generic_controller {
                 $array = json_decode(base64_decode($arrayPost));
 
 
-            $result = $this->cliente_model->create($entity, $array, $this->session->fk_pais);
+            $result = $this->archivo_model->create($entity, $array, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -103,7 +103,7 @@ class index extends generic_controller {
      * @param entityParam = value
      * @QueryParam condition
      *
-     * @RequiresPermission ["clientes", "U"]
+     * @RequiresPermission ["archivos", "U"]
      *
      */
     function index_put()
@@ -119,7 +119,7 @@ class index extends generic_controller {
                 $this->response(array('error' => $result), 200);
             }
 
-            $result = $this->cliente_model->update($this->get(), $this->put(), $this->session->fk_pais);
+            $result = $this->archivo_model->update($this->get(), $this->put(), $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -138,7 +138,7 @@ class index extends generic_controller {
 
     /**
      *
-     * @RequiresPermission ["clientes", "D"]
+     * @RequiresPermission ["archivos", "D"]
      *
      */
     function index_delete()
@@ -156,7 +156,7 @@ class index extends generic_controller {
 
         try {
 
-            $result = $this->cliente_model->delete($get_vars, $this->session->fk_pais);
+            $result = $this->archivo_model->delete($get_vars, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {

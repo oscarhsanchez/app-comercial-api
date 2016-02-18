@@ -13,6 +13,7 @@ class Medio extends eEntity {
     public $tipo_medio;
     public $estatus_iluminacion;
     public $estatus_inventario;
+    public $slots;
     public $estado;
     public $token;
     public $created_at;

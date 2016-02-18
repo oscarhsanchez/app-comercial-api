@@ -2,9 +2,12 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class Subtipo extends eEntity {
+class TipoMedio extends eEntity {
 
-    public $pk_subtipo;
+    public $pk_tipo;
+    public $fk_pais;
+    public $fk_empresa;
+    public $unidad_negocio;
     public $descripcion;
     public $estado;
     public $created_at;
@@ -13,7 +16,7 @@ class Subtipo extends eEntity {
 
 
 	public function getPK() {
-		return "pk_subtipo";
+		return "pk_tipo";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
@@ -22,7 +25,7 @@ class Subtipo extends eEntity {
 	}
 
 	public function getTableName() {
-		return "subtipos";
+        return "tipos_medios";
 	}
 
 }
