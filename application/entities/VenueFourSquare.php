@@ -7,7 +7,7 @@ class VenueFourSquare extends eEntity {
     public $id;
     public $fk_pais;
     public $fk_category;
-    public $fk_ubicacion:
+    public $fk_ubicacion;
     public $name;
     public $phone;
     public $lat;
