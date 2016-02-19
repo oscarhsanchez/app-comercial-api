@@ -41,8 +41,6 @@
 //$route['usuarios/(:any)/prueba/(:any)'] = "usuarios/index/index/$1/$2";
 $route['usuarios/(:any)'] = "usuarios/index/index/$1";
 $route['usuarios'] = "usuarios/index/index";
-$route['clientes/(:any)'] = "clientes/index/index/$1";
-$route['clientes'] = "clientes/index/index";
 $route['ubicaciones/(:any)'] = "ubicaciones/index/index/$1";
 $route['ubicaciones'] = "ubicaciones/index/index";
 $route['medios/(:any)'] = "medios/index/index/$1";
@@ -57,16 +55,22 @@ $route['gastos/(:any)'] = "gastos/index/index/$1";
 $route['gastos'] = "gastos/index/index";
 $route['parametros/(:any)'] = "parametros/index/index/$1";
 $route['parametros'] = "parametros/index/index";
-$route['agencias/(:any)'] = "agencias/index/index/$1";
-$route['agencias'] = "agencias/index/index";
 $route['briefs/(:any)'] = "briefs/index/index/$1";
 $route['briefs'] = "briefs/index/index";
 $route['archivos/(:any)'] = "archivos/index/index/$1";
 $route['archivos'] = "archivos/index/index";
+$route['clientes/(:any)/contactos/(:any)'] = "clientes/contactos/relation/$1/$2";
+$route['clientes/(:any)/contactos'] = "clientes/contactos/relation/$1";
 $route['clientes/contactos/(:any)'] = "clientes/contactos/index/$1";
 $route['clientes/contactos'] = "clientes/contactos/index";
-$route['clientes/(:any)/contactos/(:any)'] = "clientes/contactos/index/$1/$2";
-$route['clientes/(:any)/contactos'] = "clientes/contactos/index/$1";
+$route['clientes/(:any)'] = "clientes/index/index/$1";
+$route['clientes'] = "clientes/index/index";
+$route['agencias/(:any)/comisiones/(:any)'] = "agencias/comisiones/relation/$1/$2";
+$route['agencias/(:any)/comisiones'] = "agencias/comisiones/relation/$1";
+$route['agencias/comisiones/(:any)'] = "agencias/comisiones/index/$1";
+$route['agencias/comisiones'] = "agencias/comisiones/index";
+$route['agencias/(:any)'] = "agencias/index/index/$1";
+$route['agencias'] = "agencias/index/index";
 
 
 $route['default_controller'] = "doc/doc";

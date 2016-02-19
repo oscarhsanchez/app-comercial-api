@@ -147,9 +147,13 @@ define('ENTITY_AGENCIA', '/entities/Agencia.php');
 define('ENTITY_BRIEF', '/entities/Brief.php');
 define('ENTITY_ARCHIVO', '/entities/Archivo.php');
 define('ENTITY_CONTACTO_CLIENTE', '/entities/ContactoCliente.php');
+define('ENTITY_AGENCIA_COMISION', '/entities/ComisionAgencia.php');
+define('ENTITY_EJECUTIVO_COMISION', '/entities/ComisionEjecutivo.php');
 
 
 define('GENERIC_MODEL', '/models/generic_model.php');
+
+define('READER_LIB', '/libraries/Reader.php');
 
 
 /*

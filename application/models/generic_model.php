@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 require_once(APPPATH.ENTITY_APIEXCEPTION);
+require_once(APPPATH.READER_LIB);
 
 class generic_model extends CI_Model {
 
@@ -19,12 +20,12 @@ class generic_model extends CI_Model {
         $this->entity_properties_name = array();
 
         $params = array(get_called_class());
-        $this->load->library('Reader', $params, 'ModelReader');
+        $reader = new Reader($params);
 
-        $this->table = $this->ModelReader->getParameter("Table");
-        $this->entity = $this->ModelReader->getParameter("Entity");
-        $this->requires_country = $this->ModelReader->getParameter("Country");
-        $autoincrement = $this->ModelReader->getParameter("Autoincrement");
+        $this->table = $reader->getParameter("Table");
+        $this->entity = $reader->getParameter("Entity");
+        $this->requires_country = $reader->getParameter("Country");
+        $autoincrement = $reader->getParameter("Autoincrement");
 
         $this->autoincrement = $autoincrement == "true" ? 1 : 0;
 
@@ -76,12 +77,18 @@ class generic_model extends CI_Model {
                             }
                             elseif (startsWith($value, "%[") && endsWith($value, "]%"))
                                 $this->db->like($key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
-                            elseif (startsWith($value, "%["))
-                                $this->db->like($key, str_replace("%[", "", $value), 'before');
-                            elseif (endsWith($value, "]%"))
-                                $this->db->like($key, str_replace("]%", "", $value), 'after');
-                            elseif ($key == "updated_at")
-                                $this->db->where("updated_at >=", $value);
+                            elseif (startsWith($value, "%[") && endsWith($value, "]"))
+                                $this->db->like($key, str_replace("%[", "", str_replace("]", "", $value)), 'before');
+                            elseif (startsWith($value, "[") && endsWith($value, "]%"))
+                                $this->db->like($key, str_replace("[", "", str_replace("]%", "", $value)), 'after');
+                            elseif (startsWith($value, ">[") && endsWith($value, "]"))
+                                $this->db->where($key . " >", str_replace(">[", "", str_replace("]", "", $value)));
+                            elseif (startsWith($value, ">=[") && endsWith($value, "]"))
+                                $this->db->where($key . " >=", str_replace(">=[", "", str_replace("]", "", $value)));
+                            elseif (startsWith($value, "<[") && endsWith($value, "]"))
+                                $this->db->where($key . " <", str_replace("<[", "", str_replace("]", "", $value)));
+                            elseif (startsWith($value, "<=[") && endsWith($value, "]"))
+                                $this->db->where($key . " <=", str_replace("<=[", "", str_replace("]", "", $value)));
                             else
                                 $this->db->where($key, $value);
                         } else
@@ -319,6 +326,25 @@ class generic_model extends CI_Model {
             $this->db->where('fk_pais', $countryId);
 
         $this->db->where("token", $token);
+
+        $query = $this->db->get($this->table);
+        if ($this->entity)
+            return $query->row($this->entity);
+        else
+            return $query->row();
+
+
+    }
+
+    function getBy($fieldName, $value, $countryId) {
+        if ($this->requires_country && $countryId)
+            $this->db->where('fk_pais', $countryId);
+
+        if (is_array($this->entity_properties_name) && in_array($fieldName, $this->entity_properties_name))
+            $this->db->where($fieldName, $value);
+        else
+            throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $fieldName);
+
 
         $query = $this->db->get($this->table);
         if ($this->entity)

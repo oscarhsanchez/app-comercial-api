@@ -3,20 +3,21 @@
 // This can be removed if you use __autoload() in config.php
 require_once(APPPATH.VALLAS_BASE_CONTROLLER);
 require_once(APPPATH.ENTITY_APIERROR);
-require_once(APPPATH.ENTITY_CONTACTO_CLIENTE);
+require_once(APPPATH.ENTITY_AGENCIA_COMISION);
+require_once(APPPATH.ENTITY_AGENCIA);
 
 
 
-class contactos extends generic_controller {
+class comisiones extends generic_controller {
    	
     function __construct() {
         parent::__construct();
-        $this->load->model('clientes/contacto_model');
-        $this->load->model('clientes/cliente_model');
+        $this->load->model('agencias/agencia_model');
+        $this->load->model('agencias/comision_agencia_model');
     }
 
     /**
-     * Example Like : field1 = [%search%] & field2 = [%search & field3 = search%]
+     * Example Like : field1 = %[search]% & field2 = %[search] & field3 = [search]%
      *
      * @header Authorization
      *
@@ -25,16 +26,16 @@ class contactos extends generic_controller {
      * @param sort (Opcional) : [field1_ASC, field2_DESC]
      * @param pagination (Opcional): {"active":1, "pageSize": 200, "page":0, "totalPages":null, "cache_token":null}
      *
-     * @RequiresPermission ["clientes", "R"]
+     * @RequiresPermission ["agencias", "R"]
      *
      */
-    public function relation_get($p_cliente)
+    public function relation_get($p_agencia)
     {
 
         $this->checkSecurity(__FUNCTION__);
 
         $get_vars = $this->get();
-        unset($get_vars[$p_cliente]);
+        unset($get_vars[$p_agencia]);
 
         $offset = $this->get("offset");
         $limit = $this->get("limit");
@@ -42,11 +43,11 @@ class contactos extends generic_controller {
         $pagination = json_decode($this->get('pagination'));
 
         try {
-            //Obtenemos el cliente
-            $cliente = $this->cliente_model->getBy("pk_cliente", $p_cliente, $this->session->fk_pais);
+            //Obtenemos el agencia
+            $agencia = $this->agencia_model->getBy("pk_agencia", $p_agencia, $this->session->fk_pais);
             //Si no existe lo buscamos por el token
-            if (!$cliente)
-                $cliente = $this->cliente_model->getBy("token", $p_cliente, $this->session->fk_pais);
+            if (!$agencia)
+                $agencia = $this->agencia_model->getBy("token", $p_agencia, $this->session->fk_pais);
 
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
@@ -54,19 +55,19 @@ class contactos extends generic_controller {
             $this->response(array('error' => $result), 200);
         }
 
-        if (!$cliente) {
+        if (!$agencia) {
             $err = new APIerror(ERROR_GETTING_INFO);
             $result = $err->getValues();
             $this->response(array('error' => $result), 200);
         }
 
         try {
-            $result = $this->contacto_model->getAll($get_vars, $this->session->fk_pais, $offset, $limit, $sort, $pagination);
-            $cliente->contactos = $result["result"];
+            $result = $this->comision_agencia_model->getAll($get_vars, $this->session->fk_pais, $offset, $limit, $sort, $pagination);
+            $agencia->comisiones = $result["result"];
             if ($result["pagination"])
-                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'cliente' => $cliente), 200);
+                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'agencia' => $agencia), 200);
             else
-                $this->response(array('result' => 'OK', 'cliente' => $cliente), 200);
+                $this->response(array('result' => 'OK', 'agencia' => $agencia), 200);
 
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
@@ -87,7 +88,7 @@ class contactos extends generic_controller {
      * @param sort (Opcional) : [field1_ASC, field2_DESC]
      * @param pagination (Opcional): {"active":1, "pageSize": 200, "page":0, "totalPages":null, "cache_token":null}
      *
-     * @RequiresPermission ["clientes", "R"]
+     * @RequiresPermission ["agencias", "R"]
      *
      */
     public function index_get()
@@ -101,11 +102,11 @@ class contactos extends generic_controller {
         $pagination = json_decode($this->get('pagination'));
 
         try {
-            $result = $this->contacto_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
+            $result = $this->comision_agencia_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
             if ($result["pagination"])
-                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'contactos' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'comisiones' => $result["result"]), 200);
             else
-                $this->response(array('result' => 'OK', 'contactos' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'comisiones' => $result["result"]), 200);
 
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
@@ -118,7 +119,7 @@ class contactos extends generic_controller {
 
     /**
      *
-     * @RequiresPermission ["clientes", "C"]
+     * @RequiresPermission ["agencias", "C"]
      *
      */
     function index_post()
@@ -144,7 +145,7 @@ class contactos extends generic_controller {
                 $array = json_decode(base64_decode($arrayPost));
 
 
-            $result = $this->contacto_model->create($entity, $array, $this->session->fk_pais);
+            $result = $this->comision_agencia_model->create($entity, $array, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -166,7 +167,7 @@ class contactos extends generic_controller {
      * @param entityParam = value
      * @QueryParam condition
      *
-     * @RequiresPermission ["clientes", "U"]
+     * @RequiresPermission ["agencias", "U"]
      *
      */
     function index_put()
@@ -182,7 +183,7 @@ class contactos extends generic_controller {
                 $this->response(array('error' => $result), 200);
             }
 
-            $result = $this->contacto_model->update($this->get(), $this->put(), $this->session->fk_pais);
+            $result = $this->comision_agencia_model->update($this->get(), $this->put(), $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -201,7 +202,7 @@ class contactos extends generic_controller {
 
     /**
      *
-     * @RequiresPermission ["clientes", "D"]
+     * @RequiresPermission ["agencias", "D"]
      *
      */
     function index_delete()
@@ -219,7 +220,7 @@ class contactos extends generic_controller {
 
         try {
 
-            $result = $this->contacto_model->delete($get_vars, $this->session->fk_pais);
+            $result = $this->comision_agencia_model->delete($get_vars, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
