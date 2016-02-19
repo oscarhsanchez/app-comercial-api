@@ -67,6 +67,10 @@ class login extends REST_Controller
                     $result = $err->getValues();
                     $this->response(array('result' => 'error', 'error' => $result), 200);
                 }
+            } else {
+                $err = new APIerror(INVALID_USERNAME_OR_PASS);
+                $result = $err->getValues();
+                $this->response(array('result' => 'error', 'error' => $result), 200);
             }
 
         } else if ($renew_token && $access_token) {
