@@ -19,6 +19,10 @@ class Ubicacion extends eEntity {
     public $anio;
     public $fecha_instalacion;
     public $observaciones;
+    public $trafico_vehicular;
+    public $trafico_transeuntes;
+    public $nivel_socioeconomico;
+    public $lugares_cercanos;
     public $latitud;
     public $longitud;
     public $reserva;

@@ -149,6 +149,8 @@ define('ENTITY_ARCHIVO', '/entities/Archivo.php');
 define('ENTITY_CONTACTO_CLIENTE', '/entities/ContactoCliente.php');
 define('ENTITY_AGENCIA_COMISION', '/entities/ComisionAgencia.php');
 define('ENTITY_EJECUTIVO_COMISION', '/entities/ComisionEjecutivo.php');
+define('ENTITY_ACCION_CLIENTE', '/entities/AccionCliente.php');
+define('ENTITY_TIPO_ACCION', '/entities/TipoAccion.php');
 
 
 define('GENERIC_MODEL', '/models/generic_model.php');

@@ -62,6 +62,8 @@ $route['archivos'] = "archivos/index/index";
 $route['clientes/(:any)/contactos/(:any)'] = "clientes/contactos/relation/$1/$2";
 $route['clientes/(:any)/contactos'] = "clientes/contactos/relation/$1";
 $route['clientes/contactos/(:any)'] = "clientes/contactos/index/$1";
+$route['clientes/(:any)/acciones/(:any)'] = "clientes/acciones/relation/$1/$2";
+$route['clientes/(:any)/acciones'] = "clientes/acciones/relation/$1";
 $route['clientes/contactos'] = "clientes/contactos/index";
 $route['clientes/(:any)'] = "clientes/index/index/$1";
 $route['clientes'] = "clientes/index/index";
@@ -71,7 +73,10 @@ $route['agencias/comisiones/(:any)'] = "agencias/comisiones/index/$1";
 $route['agencias/comisiones'] = "agencias/comisiones/index";
 $route['agencias/(:any)'] = "agencias/index/index/$1";
 $route['agencias'] = "agencias/index/index";
-
+$route['acciones_clientes/tipos/(:any)'] = "acciones_clientes/tipos/index/$1";
+$route['acciones_clientes/tipos'] = "acciones_clientes/tipos/index";
+$route['acciones_clientes/(:any)'] = "acciones_clientes/index/index/$1";
+$route['acciones_clientes'] = "acciones_clientes/index/index";
 
 $route['default_controller'] = "doc/doc";
 $route['404_override'] = '';

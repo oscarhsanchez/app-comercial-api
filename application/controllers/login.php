@@ -34,7 +34,6 @@ class login extends REST_Controller
      */
 	public function index_post()
     {
-
     	// Check for required parameters
         if((!$this->post('renew_token') || !$this->post('access_token') || !$this->post('deviceid') || !$this->post('countryid')) && (!$this->post('deviceid') || !$this->post('countryid') || !$this->post('username') || !$this->post('password')) ) {
             $err = new APIerror(INVALID_NUMBER_OF_PARAMS);
@@ -51,6 +50,7 @@ class login extends REST_Controller
         $access_token = $this->post('access_token');
 
         if ($username && $pass) {
+
             $user = $this->user_model->getUserByUserName($username);
 
             if ($user) {

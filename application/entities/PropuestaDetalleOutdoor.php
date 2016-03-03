@@ -8,6 +8,8 @@ class PropuestaDetalleOutdoor extends eEntity {
     public $fk_propuesta_detalle;
     public $fk_pais;
     public $fk_medio;
+    public $tipo_negociacion;
+    public $unidad_negocio;
     public $posicion_medio;
     public $moneda;
     public $precio;

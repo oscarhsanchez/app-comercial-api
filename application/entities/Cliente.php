@@ -11,6 +11,15 @@ class Cliente extends eEntity {
     public $rfc;
     public $razon_social;
     public $nombre_comercial;
+    public $direccion;
+    public $domicilio_calle;
+    public $domicilio_no_exterior;
+    public $domicilio_no_interior;
+    public $domicilio_colonia;
+    public $domicilio_delegacion;
+    public $domicilio_estado;
+    public $domicilio_pais;
+    public $domicilio_cp;
     public $porcentaje_comision;
     public $dias_credito;
     public $credito_maximo;

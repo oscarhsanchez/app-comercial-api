@@ -2,28 +2,25 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class Medio extends eEntity {
+class ParametrosPropuesta extends eEntity {
 
-    public $pk_medio;
-    public $fk_pais;
-    public $fk_ubicacion;
-    public $fk_subtipo;
-    public $posicion;
-    public $id_cara;
-    public $tipo_medio;
-    public $estatus_iluminacion;
-    public $visibilidad;
-    public $estatus_inventario;
-    public $slots;
-    public $coste;
+    public  $pk_parametros_propuesta;
+    public $prespuesto;
+    public $plazas;
+    public $fecha_inicio;
+    public $catorcenas;
+    public $lugares_cercanos;
+    public $lugares_cercanos_restriccion;
+    public $tipologia;
+    public $iluminacion;
     public $estado;
-    public $token;
     public $created_at;
     public $updated_at;
+    public $token;
 
 
 	public function getPK() {
-		return "pk_medio";
+		return "pk_parametros_propuesta";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
@@ -32,7 +29,7 @@ class Medio extends eEntity {
 	}
 
 	public function getTableName() {
-		return "medios";
+		return "parametros_propuestas";
 	}
 
 }

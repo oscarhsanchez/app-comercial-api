@@ -8,6 +8,7 @@ class Propuesta extends eEntity {
     public $fk_pais;
     public $fk_empresa;
     public $fk_cliente;
+    public $fk_categoria_propuesta;
     public $anio;
     public $fecha_inicio;
     public $fecha_fin;
