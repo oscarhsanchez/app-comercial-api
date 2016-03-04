@@ -8,11 +8,11 @@ class Brief extends eEntity {
     public $fk_pais;
     public $fk_cliente;
     public $cod_user;
-    //public fk_marca;
+    public $paises_plazas;
     public $objetivo;
     public $fecha_inicio;
     public $fecha_fin;
-    public $productos;
+    public $tipologia_medios;
     public $fecha_solicitud;
     public $fecha_entrega;
     public $estado;

@@ -10,6 +10,9 @@ class Ubicacion extends eEntity {
     public $unidad_negocio;
     public $tipo_medio;
     public $fk_plaza;
+    public $fk_zona_fijacion;
+    public $fk_zona_instalacion;
+    public $fk_zona_iluminacion;
     public $estatus;
     public $ubicacion;
     public $direccion_comercial;

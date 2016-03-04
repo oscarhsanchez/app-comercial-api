@@ -13,6 +13,7 @@ class ParametrosPropuesta extends eEntity {
     public $lugares_cercanos_restriccion;
     public $tipologia;
     public $iluminacion;
+    public $tipologia_medios;
     public $estado;
     public $created_at;
     public $updated_at;

@@ -2,31 +2,21 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class Propuesta extends eEntity {
+class RestriccionUbicacion extends eEntity {
 
-    public $pk_Propuesta;
+    public $pk_restriccion_ubicacion;
     public $fk_pais;
-    public $fk_empresa;
+    public $fk_ubicacion;
     public $fk_cliente;
     public $fk_categoria_propuesta;
-    public $anio;
-    public $fecha_inicio;
-    public $fecha_fin;
-    public $catorcena;
-    public $cod_user;
-    public $comision_user;
-    public $fk_agencia;
-    public $comision_agencia;
-    public $observaciones;
-    public $status;
     public $estado;
+    public $token;
     public $created_at;
     public $updated_at;
-    public $token;
 
 
 	public function getPK() {
-		return "pk_propuesta";
+		return "pk_restriccion_ubicacion";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
@@ -35,7 +25,7 @@ class Propuesta extends eEntity {
 	}
 
 	public function getTableName() {
-		return "propuestas";
+		return "restricciones_ubicaciones";
 	}
 
 }
