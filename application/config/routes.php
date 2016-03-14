@@ -77,6 +77,8 @@ $route['acciones_clientes/tipos/(:any)'] = "acciones_clientes/tipos/index/$1";
 $route['acciones_clientes/tipos'] = "acciones_clientes/tipos/index";
 $route['acciones_clientes/(:any)'] = "acciones_clientes/index/index/$1";
 $route['acciones_clientes'] = "acciones_clientes/index/index";
+$route['clientes/acciones/(:any)'] = "acciones_clientes/index/index/$1";
+$route['clientes/acciones'] = "acciones_clientes/index/index";
 
 $route['default_controller'] = "doc/doc";
 $route['404_override'] = '';
