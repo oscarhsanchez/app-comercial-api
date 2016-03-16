@@ -5,6 +5,10 @@ require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 class SubtipoMedio extends eEntity {
 
     public $pk_subtipo;
+    public $fk_tipo;
+    public $fk_empresa;
+    public $unidad_negocio;
+    public $fk_pais;
     public $descripcion;
     public $estado;
     public $created_at;
