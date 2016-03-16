@@ -139,9 +139,10 @@ define('ENTITY_UBICACION', '/entities/Ubicacion.php');
 define('ENTITY_MEDIO', '/entities/Medio.php');
 define('ENTITY_METADATA_CATEGORY_FQ', '/entities/CategoryFourSquare.php');
 define('ENTITY_METADATA_VENUE_FQ', '/entities/VenueFourSquare.php');
-define('ENTITY_METADATA_CATORCENA', '/entities/Catorcena.php');
-define('ENTITY_METADATA_GASTO', '/entities/Gasto.php');
-define('ENTITY_METADATA_PLAZA', '/entities/Plaza.php');
+define('ENTITY_CATORCENA', '/entities/Catorcena.php');
+define('ENTITY_GASTO', '/entities/Gasto.php');
+define('ENTITY_PLAZA', '/entities/Plaza.php');
+define('ENTITY_PAIS', '/entities/Pais.php');
 define('ENTITY_PARAMETRO_TPV', '/entities/ParametroTpv.php');
 define('ENTITY_AGENCIA', '/entities/Agencia.php');
 define('ENTITY_BRIEF', '/entities/Brief.php');
@@ -151,7 +152,9 @@ define('ENTITY_AGENCIA_COMISION', '/entities/ComisionAgencia.php');
 define('ENTITY_EJECUTIVO_COMISION', '/entities/ComisionEjecutivo.php');
 define('ENTITY_ACCION_CLIENTE', '/entities/AccionCliente.php');
 define('ENTITY_TIPO_ACCION', '/entities/TipoAccion.php');
-
+define('ENTITY_TIPO_MEDIO', '/entities/TipoMedio.php');
+define('ENTITY_SUBTIPO_MEDIO', '/entities/SubtipoMedio.php');
+define('ENTITY_CATEGORIA_PROPUESTA', '/entities/CategoriaPropuesta.php');
 
 define('GENERIC_MODEL', '/models/generic_model.php');
 

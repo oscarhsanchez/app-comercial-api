@@ -79,6 +79,15 @@ $route['acciones_clientes/(:any)'] = "acciones_clientes/index/index/$1";
 $route['acciones_clientes'] = "acciones_clientes/index/index";
 $route['clientes/acciones/(:any)'] = "acciones_clientes/index/index/$1";
 $route['clientes/acciones'] = "acciones_clientes/index/index";
+$route['paises/(:any)'] = "paises/index/index/$1";
+$route['paises'] = "paises/index/index";
+$route['medios/tipos/(:any)'] = "tipos_medios/index/index/$1";
+$route['medios/tipos'] = "tipos_medios/index/index";
+$route['medios/subtipos/(:any)'] = "subtipos_medios/index/index/$1";
+$route['medios/subtipos'] = "subtipos_medios/index/index";
+$route['propuestas/categorias/(:any)'] = "categorias_propuestas/index/index/$1";
+$route['propuestas/categorias'] = "categorias_propuestas/index/index";
+
 
 $route['default_controller'] = "doc/doc";
 $route['404_override'] = '';

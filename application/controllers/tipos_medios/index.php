@@ -3,7 +3,7 @@
 // This can be removed if you use __autoload() in config.php
 require_once(APPPATH.VALLAS_BASE_CONTROLLER);
 require_once(APPPATH.ENTITY_APIERROR);
-require_once(APPPATH.ENTITY_GASTO);
+
 
 
 
@@ -11,7 +11,7 @@ class index extends generic_controller {
    	
     function __construct() {
         parent::__construct();
-        $this->load->model('gastos/gasto_model');
+        $this->load->model('medios/tipo_medio_model');
     }
 
     /**
@@ -24,7 +24,7 @@ class index extends generic_controller {
      * @param sort (Opcional) : [field1_ASC, field2_DESC]
      * @param pagination (Opcional): {"active":1, "pageSize": 200, "page":0, "totalPages":null, "cache_token":null}
      *
-     * @RequiresPermission ["gastos", "R"]
+     * @RequiresPermission ["medios", "R"]
      *
      */
     public function index_get()
@@ -39,11 +39,11 @@ class index extends generic_controller {
         $pagination = json_decode($this->get('pagination'));
 
         try {
-            $result = $this->gasto_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
+            $result = $this->tipo_medio_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
             if ($result["pagination"])
-                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'gastos' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'tipos_medios' => $result["result"]), 200);
             else
-                $this->response(array('result' => 'OK', 'gastos' => $result["result"]), 200);
+                $this->response(array('result' => 'OK', 'tipos_medios' => $result["result"]), 200);
 
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
@@ -56,7 +56,7 @@ class index extends generic_controller {
 
     /**
      *
-     * @RequiresPermission ["gastos", "C"]
+     * @RequiresPermission ["medios", "C"]
      *
      */
     function index_post()
@@ -82,7 +82,7 @@ class index extends generic_controller {
                 $array = json_decode(base64_decode($arrayPost));
 
 
-            $result = $this->gasto_model->create($entity, $array, $this->session->fk_pais);
+            $result = $this->tipo_medio_model->create($entity, $array, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -104,7 +104,7 @@ class index extends generic_controller {
      * @param entityParam = value
      * @QueryParam condition
      *
-     * @RequiresPermission ["gastos", "U"]
+     * @RequiresPermission ["medios", "U"]
      *
      */
     function index_put()
@@ -120,7 +120,7 @@ class index extends generic_controller {
                 $this->response(array('error' => $result), 200);
             }
 
-            $result = $this->gasto_model->update($this->get(), $this->put(), $this->session->fk_pais);
+            $result = $this->tipo_medio_model->update($this->get(), $this->put(), $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -139,7 +139,7 @@ class index extends generic_controller {
 
     /**
      *
-     * @RequiresPermission ["gastos", "D"]
+     * @RequiresPermission ["medios", "D"]
      *
      */
     function index_delete()
@@ -157,7 +157,7 @@ class index extends generic_controller {
 
         try {
 
-            $result = $this->gasto_model->delete($get_vars, $this->session->fk_pais);
+            $result = $this->tipo_medio_model->delete($get_vars, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
