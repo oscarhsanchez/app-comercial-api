@@ -155,6 +155,9 @@ define('ENTITY_TIPO_ACCION', '/entities/TipoAccion.php');
 define('ENTITY_TIPO_MEDIO', '/entities/TipoMedio.php');
 define('ENTITY_SUBTIPO_MEDIO', '/entities/SubtipoMedio.php');
 define('ENTITY_CATEGORIA_PROPUESTA', '/entities/CategoriaPropuesta.php');
+define('ENTITY_ORDEN_TRABAJO', '/entities/OrdenTrabajo.php');
+define('ENTITY_LOG_ORDEN_TRABAJO', '/entities/LogOrdenTrabajo.php');
+define('ENTITY_INCIDENCIA', '/entities/Incidencia.php');
 
 define('GENERIC_MODEL', '/models/generic_model.php');
 

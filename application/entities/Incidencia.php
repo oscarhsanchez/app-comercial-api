@@ -2,15 +2,15 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class OrdenTrabajo extends eEntity {
+class Incidencia extends eEntity {
 
-    public $pk_orden_trabajo;
+    public $pk_incidencia;
     public $fk_pais;
-    public $fk_propuesta;
     public $fk_medio;
     public $codigo_user;
+    public $codigo_user_asignado;
     public $tipo;
-    public $estado_orden;
+    public $estado_incidencia;
     public $fecha_limite;
     public $fecha_cierre;
     public $observaciones;
@@ -22,7 +22,7 @@ class OrdenTrabajo extends eEntity {
 
 
 	public function getPK() {
-		return "pk_orden_trabajo";
+		return "pk_incidencia";
 	}
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
@@ -31,7 +31,7 @@ class OrdenTrabajo extends eEntity {
 	}
 
 	public function getTableName() {
-		return "ordenes_trabajo";
+		return "incidencias";
 	}
 
 }

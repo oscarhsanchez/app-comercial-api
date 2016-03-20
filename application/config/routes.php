@@ -89,6 +89,10 @@ $route['medios/subtipos/(:any)'] = "subtipos_medios/index/index/$1";
 $route['medios/subtipos'] = "subtipos_medios/index/index";
 $route['propuestas/categorias/(:any)'] = "categorias_propuestas/index/index/$1";
 $route['propuestas/categorias'] = "categorias_propuestas/index/index";
+$route['ordenes/(:any)'] = "ordenes_trabajo/index/index/$1";
+$route['ordenes'] = "ordenes_trabajo/index/index";
+$route['incidencias/(:any)'] = "incidencias/index/index/$1";
+$route['incidencias'] = "incidencias/index/index";
 
 
 $route['default_controller'] = "doc/doc";
