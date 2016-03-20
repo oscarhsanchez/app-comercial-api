@@ -2,11 +2,11 @@
 
 require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 
-class Imagen extends eEntity {
+class ImagenIncidencia extends eEntity {
 
     public $pk_archivo;
     public $fk_pais;
-    public $fk_orden_trabajo;
+    public $fk_incidencia;
     public $nombre;
     public $path;
     public $url;
@@ -29,7 +29,7 @@ class Imagen extends eEntity {
 	}
 
 	public function getTableName() {
-		return "imagenes";
+		return "imagenes_incidencias";
 	}
 
 }

@@ -89,8 +89,12 @@ $route['medios/subtipos/(:any)'] = "subtipos_medios/index/index/$1";
 $route['medios/subtipos'] = "subtipos_medios/index/index";
 $route['propuestas/categorias/(:any)'] = "categorias_propuestas/index/index/$1";
 $route['propuestas/categorias'] = "categorias_propuestas/index/index";
+$route['ordenes/imagenes/(:any)'] = "imagenes_ordenes/index/index/$1";
+$route['ordenes/imagenes'] = "imagenes_ordenes/index/index";
 $route['ordenes/(:any)'] = "ordenes_trabajo/index/index/$1";
 $route['ordenes'] = "ordenes_trabajo/index/index";
+$route['incidencias/imagenes/(:any)'] = "imagenes_incidencias/index/index/$1";
+$route['incidencias/imagenes'] = "imagenes_incidencias/index/index";
 $route['incidencias/(:any)'] = "incidencias/index/index/$1";
 $route['incidencias'] = "incidencias/index/index";
 
