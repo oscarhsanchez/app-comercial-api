@@ -41,6 +41,8 @@
 //$route['usuarios/(:any)/prueba/(:any)'] = "usuarios/index/index/$1/$2";
 $route['usuarios/(:any)'] = "usuarios/index/index/$1";
 $route['usuarios'] = "usuarios/index/index";
+$route['ubicaciones/imagenes/(:any)'] = "imagenes_ubicaciones/index/index/$1";
+$route['ubicaciones/imagenes'] = "imagenes_ubicaciones/index/index";
 $route['ubicaciones/(:any)'] = "ubicaciones/index/index/$1";
 $route['ubicaciones'] = "ubicaciones/index/index";
 $route['medios/(:any)'] = "medios/index/index/$1";

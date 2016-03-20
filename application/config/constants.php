@@ -160,6 +160,8 @@ define('ENTITY_IMAGEN_ORDEN_TRABAJO', '/entities/ImagenOrden.php');
 define('ENTITY_LOG_ORDEN_TRABAJO', '/entities/LogOrdenTrabajo.php');
 define('ENTITY_INCIDENCIA', '/entities/Incidencia.php');
 define('ENTITY_IMAGEN_INCIDENCIA', '/entities/ImagenIncidencia.php');
+define('ENTITY_IMAGEN_UBICACION', '/entities/ImagenUbicacion.php');
+
 
 define('GENERIC_MODEL', '/models/generic_model.php');
 
