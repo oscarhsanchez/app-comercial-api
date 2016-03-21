@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once(APPPATH.ENTITY_CLIENTE);
+require_once(APPPATH.ENTITY_MEDIO);
 require_once(APPPATH.GENERIC_MODEL);
 
 

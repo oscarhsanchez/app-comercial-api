@@ -39,7 +39,7 @@ class index extends generic_controller {
         $pagination = json_decode($this->get('pagination'));
 
         try {
-            $result = $this->orden_trabajo_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
+            $result = $this->orden_trabajo_model->getAllOrdenes($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
             if ($result["pagination"])
                 $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'ordenes' => $result["result"]), 200);
             else
