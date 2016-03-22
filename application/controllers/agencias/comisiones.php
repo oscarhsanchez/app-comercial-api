@@ -175,6 +175,15 @@ class comisiones extends generic_controller {
 
         $this->checkSecurity(__FUNCTION__);
 
+        //Tenemos que unir las variables de la URL y las de QueryParam
+        $get_vars = array();
+        if ($this->input->get() && $this->get())
+            $get_vars = array_merge($this->input->get(), $this->get());
+        else if ($this->input->get())
+            $get_vars = $this->input->get();
+        else if ($this->get())
+            $get_vars = $this->get();
+
         try {
 
             if (sizeof($this->put()) == 0) {
@@ -183,7 +192,7 @@ class comisiones extends generic_controller {
                 $this->response(array('error' => $result), 200);
             }
 
-            $result = $this->comision_agencia_model->update($this->get(), $this->put(), $this->session->fk_pais);
+            $result = $this->comision_agencia_model->update($get_vars, $this->put(), $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
