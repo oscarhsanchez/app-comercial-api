@@ -15,71 +15,85 @@ require_once(APPPATH.GENERIC_MODEL);
 class imagen_model extends generic_Model {
 
     function createImagen($entity, $array, $countryId) {
-
+        $arrImg = array();
         if ($entity) {
-            if (!$entity->data)
+            if (!$entity->data || !$entity->nombre)
                 throw new APIexception("Missing mandatory parameter", INVALID_NUMBER_OF_PARAMS, "");
 
-            $filedata = $entity->data;
+            $filedata = base64_decode($entity->data);
             unset($entity->data);
 
             $arrayFile = explode('.', $entity->nombre);
             $extension = end($arrayFile);
 
+            $instance = new ImagenUbicacion();
+            $instance->set($entity);
+
+            $dbEntity = null;
             if (isset($entity->token))
                 $dbEntity = $this->getByToken($entity->token, $countryId);
 
             if ($dbEntity) {
-                $entity->pk_archivo = $dbEntity->pk_archivo;
-                $entity->nombre = $dbEntity->nombre;
-                $entity->url = $dbEntity->url;
-                $entity->path = $dbEntity->path;
+                $instance->pk_archivo = $dbEntity->pk_archivo;
+                $instance->nombre = $dbEntity->nombre;
+                $instance->url = $dbEntity->url;
+                $instance->path = $dbEntity->path;
+                $instance->fk_pais = $countryId;
             } else {
-                $entity->nombre = getToken() . "." . $extension;
-                $entity->url = UBICACIONES_IMAGES_URL . "/";
-                $entity->path = UBICACIONES_IMAGES_PATH . "/";
-                $entity->estado = 1;
-                if (!$entity->estado_imagen) $entity->estado_imagen = 0;
+                $instance->nombre = getToken() . "." . $extension;
+                $instance->url = UBICACIONES_IMAGES_URL . "/";
+                $instance->path = UBICACIONES_IMAGES_PATH . "/";
+                $instance->estado = 1;
+                $instance->fk_pais = $countryId;
+                if (!$instance->estado_imagen) $instance->estado_imagen = 0;
             }
 
-            file_put_contents($entity->path . $entity->nombre, $filedata);
+            file_put_contents($instance->path . $instance->nombre, $filedata);
 
 
         } else {
 
             foreach ($array as $entity) {
-                if (!$entity->data)
+                if (!$entity->data || !$entity->nombre)
                     throw new APIexception("Missing mandatory parameter", INVALID_NUMBER_OF_PARAMS, "");
 
-                $filedata = $entity->data;
+                $filedata = base64_decode($entity->data);
                 unset($entity->data);
 
                 $arrayFile = explode('.', $entity->nombre);
                 $extension = end($arrayFile);
 
+                $instance = new ImagenUbicacion();
+                $instance->set($entity);
+
+                $dbEntity = null;
                 if (isset($entity->token))
                     $dbEntity = $this->getByToken($entity->token, $countryId);
 
                 if ($dbEntity) {
-                    $entity->pk_archivo = $dbEntity->pk_archivo;
-                    $entity->nombre = $dbEntity->nombre;
-                    $entity->url = $dbEntity->url;
-                    $entity->path = $dbEntity->path;
+                    $instance->pk_archivo = $dbEntity->pk_archivo;
+                    $instance->nombre = $dbEntity->nombre;
+                    $instance->url = $dbEntity->url;
+                    $instance->path = $dbEntity->path;
+                    $instance->fk_pais = $countryId;
                 } else {
-                    $entity->nombre = getToken() . "." . $extension;
-                    $entity->url = ORDENES_IMAGES_URL . "/";
-                    $entity->path = ORDENES_IMAGES_PATH . "/";
-                    $entity->estado = 1;
-                    if (!$entity->estado_imagen) $entity->estado_imagen = 0;
+                    $instance->nombre = getToken() . "." . $extension;
+                    $instance->url = UBICACIONES_IMAGES_URL . "/";
+                    $instance->path = UBICACIONES_IMAGES_PATH . "/";
+                    $instance->estado = 1;
+                    $instance->fk_pais = $countryId;
+                    if (!$instance->estado_imagen) $instance->estado_imagen = 0;
                 }
 
-                file_put_contents($entity->path . $entity->nombre, $filedata);
+                $arrImg[] = $instance;
+
+                file_put_contents($instance->path . $instance->nombre, $filedata);
             }
 
 
         }
 
-        return $this->create($entity, $array, $countryId);
+        return $this->create($instance, $arrImg, $countryId);
 
     }
 	

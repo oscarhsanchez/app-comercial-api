@@ -15,7 +15,7 @@ require_once(APPPATH.GENERIC_MODEL);
 class imagen_model extends generic_Model {
 
     function createImagen($entity, $array, $countryId) {
-
+        $arrImg = array();
         if ($entity) {
             if (!$entity->data || !$entity->nombre)
                 throw new APIexception("Missing mandatory parameter", INVALID_NUMBER_OF_PARAMS, "");
@@ -26,7 +26,7 @@ class imagen_model extends generic_Model {
             $arrayFile = explode('.', $entity->nombre);
             $extension = end($arrayFile);
 
-            $instance = $this->class->newInstanceArgs();
+            $instance = new ImagenOrden();
             $instance->set($entity);
 
             $dbEntity = null;
@@ -50,9 +50,8 @@ class imagen_model extends generic_Model {
 
             file_put_contents($instance->path . $instance->nombre, $filedata);
 
-
         } else {
-            $arrImg = array();
+
             foreach ($array as $entity) {
                 if (!$entity->data || !$entity->nombre)
                     throw new APIexception("Missing mandatory parameter", INVALID_NUMBER_OF_PARAMS, "");
@@ -63,7 +62,7 @@ class imagen_model extends generic_Model {
                 $arrayFile = explode('.', $entity->nombre);
                 $extension = end($arrayFile);
 
-                $instance = $this->class->newInstanceArgs();
+                $instance = new ImagenOrden();
                 $instance->set($entity);
 
                 $dbEntity = null;
