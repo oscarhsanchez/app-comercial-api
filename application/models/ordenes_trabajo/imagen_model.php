@@ -57,7 +57,7 @@ class imagen_model extends generic_Model {
                 if (!$entity->data || !$entity->nombre)
                     throw new APIexception("Missing mandatory parameter", INVALID_NUMBER_OF_PARAMS, "");
 
-                $filedata = $entity->data;
+                $filedata = base64_decode($entity->data);
                 unset($entity->data);
 
                 $arrayFile = explode('.', $entity->nombre);
