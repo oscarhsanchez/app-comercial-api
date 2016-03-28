@@ -75,7 +75,7 @@ class session_model extends CI_Model {
      * @return Session|null
      */
     function renewSession($userId, $roles, $countryId, $phoneId, $renewToken) {
-		$q = "SELECT renew_token FROM session WHERE fk_user = '$userId' AND fk_pais = '$countryId' AND phone_id = '$phoneId' ORDER BY created_at DESC";
+		$q = "SELECT renew_token, codigo FROM session WHERE fk_user = '$userId' AND fk_pais = '$countryId' AND phone_id = '$phoneId' ORDER BY created_at DESC";
         $query = $this->db->query($q);
 
         $result = $query->row();
