@@ -11,7 +11,7 @@ class session_model extends CI_Model {
      * @param $phoneId
      * @return null|Session
      */
-    function createSession($userId, $roles, $countryId, $phoneId) {
+    function createSession($userId, $codigo, $roles, $countryId, $phoneId) {
 		$token = sha1($userId.$countryId.time().TOKEN_SALT_KEY);
         $renew_token = sha1($userId.$countryId.time().RENEW_SALT_KEY);
 
@@ -20,6 +20,7 @@ class session_model extends CI_Model {
         $sesion->fk_pais = $countryId;
         $sesion->roles = $roles;
         $sesion->phone_id = $phoneId;
+        $sesion->codigo = $codigo;
         $sesion->renew_token = $renew_token;
         $sesion->access_token = $token;
         $sesion->ip = $this->input->ip_address();
@@ -83,7 +84,7 @@ class session_model extends CI_Model {
 			return null;
 		}else{
 			if ($result->renew_token == $renewToken) {
-                return $this->createSession($userId, $roles, $countryId, $phoneId);
+                return $this->createSession($userId, $result->codigo, $roles, $countryId, $phoneId);
             } else
                 return null;
 		}

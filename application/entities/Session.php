@@ -5,6 +5,7 @@ class Session extends eEntity {
 
     public $id;
     public $fk_user;
+    public $codigo;
     public $fk_pais;
     public $roles;
     public $access_token;

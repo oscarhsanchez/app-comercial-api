@@ -58,7 +58,7 @@ class login extends REST_Controller
                 $encryptedPass = bCryptPassword($pass, $salt, 13);
 
                 if ($user->password == $encryptedPass) {
-                    $new_session = $this->session_model->createSession($user->id, $user->roles, $countryId, $deviceId);
+                    $new_session = $this->session_model->createSession($user->id, $user->codigo, $user->roles, $countryId, $deviceId);
                     $this->user_model->updateLastLogin($user->id);
                     $this->esocialmemcache->set($new_session->access_token, serialize($new_session), false, SESSION_TIMEOUT);
                     $this->response(array('result' => 'OK', 'Session' => $new_session), 200);

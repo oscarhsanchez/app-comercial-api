@@ -7,6 +7,7 @@ class User extends eEntity {
     public $id;
     public $username;
     public $username_canonical;
+    public $codigo;
     public $email;
     public $email_canonical;
     public $enabled;
