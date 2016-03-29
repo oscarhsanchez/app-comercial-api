@@ -7,7 +7,7 @@ class Brief extends eEntity {
     public $pk_brief;
     public $fk_pais;
     public $fk_cliente;
-    public $cod_user;
+    public $codigo_user;
     public $paises_plazas;
     public $objetivo;
     public $fecha_inicio;
