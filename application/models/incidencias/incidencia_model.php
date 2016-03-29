@@ -23,8 +23,11 @@ class incidencia_model extends generic_Model {
 
     function getAllIncidencias($get_vars, $countryId, $offset, $limit, $sort, $pagination) {
 
-        $extended = $get_vars["extended"];
-        unset($get_vars["extended"]);
+        $extended = null;
+        if (isset($get_vars["extended"])) {
+            $extended = $get_vars["extended"];
+            unset($get_vars["extended"]);
+        }
 
         if ($extended) {
 
