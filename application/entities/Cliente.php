@@ -20,6 +20,7 @@ class Cliente extends eEntity {
     public $domicilio_estado;
     public $domicilio_pais;
     public $domicilio_cp;
+    public $telefono;
     public $porcentaje_comision;
     public $dias_credito;
     public $credito_maximo;

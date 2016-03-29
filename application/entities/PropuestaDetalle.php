@@ -9,6 +9,9 @@ class PropuestaDetalle extends eEntity {
     public $fk_pais;
     public $fk_plaza;
     public $fk_ubicacion;
+    public $fk_tipo;
+    public $fk_subtipo;
+    public $clasificacion;
     public $unidad_negocio;
     public $tipo_negociacion;
     public $moneda;

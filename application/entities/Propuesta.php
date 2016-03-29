@@ -9,6 +9,7 @@ class Propuesta extends eEntity {
     public $fk_empresa;
     public $fk_cliente;
     public $fk_categoria_propuesta;
+    public $unidad_negocio;
     public $anio;
     public $fecha_inicio;
     public $fecha_fin;
