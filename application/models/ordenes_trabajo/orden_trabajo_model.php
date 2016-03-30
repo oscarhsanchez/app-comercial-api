@@ -29,6 +29,13 @@ class orden_trabajo_model extends generic_Model {
             unset($get_vars["extended"]);
         }
 
+        if (isset($get_vars["ubicacion"])) {
+            $this->db->join("medios", "fk_medio = pk_medio", "left");
+            $this->db->join("ubicaciones", "fk_ubicacion = pk_ubicacion", "left");
+            $this->db->like("ubicaciones.ubicacion", $get_vars["ubicacion"]);
+            unset($get_vars["ubicacion"]);
+        }
+
         if ($extended) {
 
             $result = $this->getAll($get_vars, $countryId, $offset, $limit, $sort, $pagination);

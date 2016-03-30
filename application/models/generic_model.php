@@ -62,7 +62,7 @@ class generic_model extends CI_Model {
         } else {
 
             if ($this->requires_country && $countryId)
-                $this->db->where('fk_pais', $countryId);
+                $this->db->where($this->table . '.fk_pais', $countryId);
 
             if ($get_vars && is_array($get_vars)) {
 
