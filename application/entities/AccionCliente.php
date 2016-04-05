@@ -8,7 +8,7 @@ class AccionCliente extends eEntity {
     public $fk_pais;
     public $fk_cliente;
     public $fk_tipo_accion;
-    public $cod_user;
+    public $codigo_user;
     public $fecha;
     public $hora;
     public $titulo;
