@@ -19,6 +19,15 @@ class PropuestaDetalle extends eEntity {
     public $tipo_cambio;
     public $cantidad;
     public $total;
+    public $estado;
+    public $created_at;
+    public $updated_at;
+    public $token;
+
+    /**
+     * @ORM\Relation ["PropuestaDetalleOutdoor", "array"]
+     */
+    public $detalle_outdoor;
 
 
 	public function getPK() {
@@ -27,7 +36,7 @@ class PropuestaDetalle extends eEntity {
 
 	//Este metodo los usamos para definir las propidades que queremos omitir durante la grabacion en bbdd
 	public function unSetProperties() {
-		return array ("created_at", "updated_at");
+		return array ("created_at", "updated_at", "detalle_outdoor");
 	}
 
 	public function getTableName() {

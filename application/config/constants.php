@@ -161,6 +161,9 @@ define('ENTITY_LOG_ORDEN_TRABAJO', '/entities/LogOrdenTrabajo.php');
 define('ENTITY_INCIDENCIA', '/entities/Incidencia.php');
 define('ENTITY_IMAGEN_INCIDENCIA', '/entities/ImagenIncidencia.php');
 define('ENTITY_IMAGEN_UBICACION', '/entities/ImagenUbicacion.php');
+define('ENTITY_PROPUESTA', '/entities/Propuesta.php');
+define('ENTITY_PROPUESTA_DETALLE', '/entities/PropuestaDetalle.php');
+define('ENTITY_PROPUESTA_DETALLE_OUTDOOR', '/entities/PropuestaDetalleOutdoor.php');
 
 
 define('GENERIC_MODEL', '/models/generic_model.php');

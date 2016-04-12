@@ -73,24 +73,24 @@ class generic_model extends CI_Model {
                             $value = html_entity_decode($get_vars[$key]);
                             if (startsWith($value, "(") && endsWith($value, ")")) {
                                 $arr = explode(",", get_string_between($value, "(", ")"));
-                                $this->db->where_in($key, $arr);
+                                $this->db->where_in($this->table . "." . $key, $arr);
                             }
                             elseif (startsWith($value, "%[") && endsWith($value, "]%"))
-                                $this->db->like($key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
+                                $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
                             elseif (startsWith($value, "%[") && endsWith($value, "]"))
-                                $this->db->like($key, str_replace("%[", "", str_replace("]", "", $value)), 'before');
+                                $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]", "", $value)), 'before');
                             elseif (startsWith($value, "[") && endsWith($value, "]%"))
-                                $this->db->like($key, str_replace("[", "", str_replace("]%", "", $value)), 'after');
+                                $this->db->like($this->table . "." . $key, str_replace("[", "", str_replace("]%", "", $value)), 'after');
                             elseif (startsWith($value, ">[") && endsWith($value, "]"))
-                                $this->db->where($key . " >", str_replace(">[", "", str_replace("]", "", $value)));
+                                $this->db->where($this->table . "." . $key . " >", str_replace(">[", "", str_replace("]", "", $value)));
                             elseif (startsWith($value, ">=[") && endsWith($value, "]"))
-                                $this->db->where($key . " >=", str_replace(">=[", "", str_replace("]", "", $value)));
+                                $this->db->where($this->table . "." . $key . " >=", str_replace(">=[", "", str_replace("]", "", $value)));
                             elseif (startsWith($value, "<[") && endsWith($value, "]"))
-                                $this->db->where($key . " <", str_replace("<[", "", str_replace("]", "", $value)));
+                                $this->db->where($this->table . "." . $key . " <", str_replace("<[", "", str_replace("]", "", $value)));
                             elseif (startsWith($value, "<=[") && endsWith($value, "]"))
-                                $this->db->where($key . " <=", str_replace("<=[", "", str_replace("]", "", $value)));
+                                $this->db->where($this->table . "." . $key . " <=", str_replace("<=[", "", str_replace("]", "", $value)));
                             else
-                                $this->db->where($key, $value);
+                                $this->db->where($this->table . "." . $key, $value);
                         } else
                             throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
                     }
@@ -353,6 +353,103 @@ class generic_model extends CI_Model {
             return $query->row();
 
 
+    }
+
+    function extended($get_vars, $countryId=0, $offset, $limit, $sort, $pagination) {
+
+        if (isset($pagination->active) && $pagination->active && isset($pagination->cache_token)) {
+            $key = $pagination->cache_token . "-" . $pagination->page;
+            $result = unserialize($this->esocialmemcache->get($key));
+            if (!$result) throw new APIexception("Error Getting Data From Memcache", ERROR_GETTING_INFO, serialize($pagination));
+        } else {
+
+            if ($this->requires_country && $countryId)
+                $this->db->where($this->table . '.fk_pais', $countryId);
+
+            if ($get_vars && is_array($get_vars)) {
+
+                $keys = array_keys($get_vars);
+                foreach($keys as $key){
+                    if ($key != "offset" && $key != "limit" && $key != "sort" && $key != "pagination") {
+                        if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
+                            $value = html_entity_decode($get_vars[$key]);
+                            if (startsWith($value, "(") && endsWith($value, ")")) {
+                                $arr = explode(",", get_string_between($value, "(", ")"));
+                                $this->db->where_in($this->table . "." . $key, $arr);
+                            }
+                            elseif (startsWith($value, "%[") && endsWith($value, "]%"))
+                                $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
+                            elseif (startsWith($value, "%[") && endsWith($value, "]"))
+                                $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]", "", $value)), 'before');
+                            elseif (startsWith($value, "[") && endsWith($value, "]%"))
+                                $this->db->like($this->table . "." . $key, str_replace("[", "", str_replace("]%", "", $value)), 'after');
+                            elseif (startsWith($value, ">[") && endsWith($value, "]"))
+                                $this->db->where($this->table . "." . $key . " >", str_replace(">[", "", str_replace("]", "", $value)));
+                            elseif (startsWith($value, ">=[") && endsWith($value, "]"))
+                                $this->db->where($this->table . "." . $key . " >=", str_replace(">=[", "", str_replace("]", "", $value)));
+                            elseif (startsWith($value, "<[") && endsWith($value, "]"))
+                                $this->db->where($this->table . "." . $key . " <", str_replace("<[", "", str_replace("]", "", $value)));
+                            elseif (startsWith($value, "<=[") && endsWith($value, "]"))
+                                $this->db->where($this->table . "." . $key . " <=", str_replace("<=[", "", str_replace("]", "", $value)));
+                            else
+                                $this->db->where($this->table . "." . $key, $value);
+                        } else
+                            throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
+                    }
+                }
+
+            }
+
+
+            $offset = intval($offset);
+            if (is_int($offset) && $limit)
+                $this->db->limit($limit, $offset);
+
+            if ($sort) {
+                $sortArr = explode(",", get_string_between($sort, "[", "]"));
+                foreach ($sortArr as $sort) {
+                    if (endsWith(strtolower($sort), "_desc")) {
+                        if (is_array($this->entity_properties_name) && !in_array(str_replace("_desc", "",strtolower(trim($sort))), $this->entity_properties_name))
+                            throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, $key);
+                        $this->db->order_by(str_replace("_desc", "",strtolower(trim($sort))), "desc");
+                    } else {
+                        if (is_array($this->entity_properties_name) && !in_array(str_replace("_asc", "",strtolower(trim($sort))), $this->entity_properties_name))
+                            throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, $key);
+                        $this->db->order_by(str_replace("_asc", "",strtolower(trim($sort))), "asc");
+                    }
+                }
+            }
+
+            $result = $this->esdb->result($this->entity);
+
+            //Particionamos la peticion si se solicita
+            if (isset($pagination->active) && $pagination->active) {
+                $rowcount = sizeof($result);
+                if ($rowcount >= MULTIPART_CACHE_PAGINATION_MAX_SIZE)
+                    throw new APIexception("Exceeded max pagination size", ERROR_MAX_PAGINATION_SIZE, serialize($pagination));;
+
+                $pagination->totalPages = ceil($rowcount / $pagination->pageSize);
+                $pagination->page = 0;
+
+                if ($rowcount > $pagination->pageSize) {
+                    $chunk_result = array_chunk($result, $pagination->pageSize);
+
+                    $result = $chunk_result[0];
+
+                    $fecha = new DateTime();
+                    $pagination->cache_token = base64_encode(rand() . '-' . $fecha->getTimestamp() . '-' . rand());
+
+                    for ($i=1; $i < sizeof($chunk_result); $i++) {
+                        $this->esocialmemcache->add($pagination->cache_token . "-" . $i, serialize($chunk_result[$i]), false, MULTIPART_CACHE_PAGINATION_EXPIRE_TIME);
+                    }
+
+                }
+
+            }
+
+        }
+
+        return array("pagination" => $pagination, "result" => $result?$result:array());
     }
 
 }

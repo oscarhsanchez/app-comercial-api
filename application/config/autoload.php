@@ -52,7 +52,7 @@ $autoload['packages'] = array(APPPATH.'entities/entity');
 |	$autoload['libraries'] = array('database', 'Session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 's3', 'esocialmemcache');
+$autoload['libraries'] = array('database', 's3', 'esocialmemcache', "esdb");
 
 
 /*

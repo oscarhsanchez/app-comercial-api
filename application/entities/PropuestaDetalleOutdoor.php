@@ -6,7 +6,6 @@ class PropuestaDetalleOutdoor extends eEntity {
 
     public $pk_propuesta_detalle_outdoor;
     public $fk_propuesta_detalle;
-    public $fk_pais;
     public $fk_medio;
     public $tipo_negociacion;
     public $unidad_negocio;
