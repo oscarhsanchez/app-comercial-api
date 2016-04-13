@@ -403,7 +403,7 @@ class generic_model extends CI_Model {
 
             $offset = intval($offset);
             if (is_int($offset) && $limit)
-                $this->db->limit($limit, $offset);
+                $this->esdb->limit($limit, $offset);
 
             if ($sort) {
                 $sortArr = explode(",", get_string_between($sort, "[", "]"));

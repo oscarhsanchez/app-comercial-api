@@ -6,6 +6,10 @@ class Esdb {
     private $qEntities;
     private $qPkValues;
 
+    private $limit;
+    private $offset;
+    private $main_table;
+
     function __construct()
     {
         $this->ci =& get_instance();
@@ -43,7 +47,8 @@ class Esdb {
     }
 
     function from($table) {
-        return $this->ci->db->from($table);
+        $this->main_table = $table;
+        return $this->ci->db;
     }
 
     function join($table, $on, $type='inner') {
@@ -54,7 +59,17 @@ class Esdb {
         return $this->ci->db->where($param1, $param2, $param3);
     }
 
+    function limit($limit, $offset=0) {
+        $this->limit = $limit;
+        $this->offset = $offset;
+    }
+
     function result($entity) {
+
+        if ($this->limit)
+            $this->ci->db->from("(select * from $this->main_table limit $this->limit offset $this->offset) AS $this->main_table");
+        else
+            $this->ci->db->from($this->main_table);
 
         $objArr = array();
         if (!$entity)

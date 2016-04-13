@@ -37,6 +37,10 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+$route['facturas/detalle/(:any)'] = "facturas_detalle/index/index/$1";
+$route['facturas/detalle'] = "facturas_detalle/index/index";
+$route['facturas/(:any)'] = "facturas/index/index/$1";
+$route['facturas'] = "facturas/index/index";
 $route['propuestas/detalle/ourdoor/(:any)'] = "propuestas_detalle_outdoor/index/index/$1";
 $route['propuestas/detalle/outdoor'] = "propuestas_detalle_outdoor/index/index";
 $route['propuestas/detalle/(:any)'] = "propuestas_detalle/index/index/$1";

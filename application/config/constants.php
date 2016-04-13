@@ -164,7 +164,8 @@ define('ENTITY_IMAGEN_UBICACION', '/entities/ImagenUbicacion.php');
 define('ENTITY_PROPUESTA', '/entities/Propuesta.php');
 define('ENTITY_PROPUESTA_DETALLE', '/entities/PropuestaDetalle.php');
 define('ENTITY_PROPUESTA_DETALLE_OUTDOOR', '/entities/PropuestaDetalleOutdoor.php');
-
+define('ENTITY_FACTURA', '/entities/Factura.php');
+define('ENTITY_FACTURA_DETALLE', '/entities/FacturaDetalle.php');
 
 define('GENERIC_MODEL', '/models/generic_model.php');
 

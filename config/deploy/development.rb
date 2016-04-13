@@ -6,6 +6,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 server '201.150.43.109', user: 'gpovallas', roles: %w{db}
+#server '192.168.0.20', user: 'gpovallas', roles: %w{db}
 
 
 
