@@ -24,6 +24,7 @@ class User extends eEntity {
     public $credentials_expire_at;
     public $name;
     public $surnames;
+    public $bool_geo;
     public $avatar;
     public $phone;
     public $token;

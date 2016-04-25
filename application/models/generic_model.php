@@ -64,40 +64,8 @@ class generic_model extends CI_Model {
             if ($this->requires_country && $countryId)
                 $this->db->where($this->table . '.fk_pais', $countryId);
 
-            if ($get_vars && is_array($get_vars)) {
-
-                $keys = array_keys($get_vars);
-                foreach($keys as $key){
-                    if ($key != "offset" && $key != "limit" && $key != "sort" && $key != "pagination") {
-                        if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
-                            $value = html_entity_decode($get_vars[$key]);
-                            if (startsWith($value, "(") && endsWith($value, ")")) {
-                                $arr = explode(",", get_string_between($value, "(", ")"));
-                                $this->db->where_in($this->table . "." . $key, $arr);
-                            }
-                            elseif (startsWith($value, "%[") && endsWith($value, "]%"))
-                                $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
-                            elseif (startsWith($value, "%[") && endsWith($value, "]"))
-                                $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]", "", $value)), 'before');
-                            elseif (startsWith($value, "[") && endsWith($value, "]%"))
-                                $this->db->like($this->table . "." . $key, str_replace("[", "", str_replace("]%", "", $value)), 'after');
-                            elseif (startsWith($value, ">[") && endsWith($value, "]"))
-                                $this->db->where($this->table . "." . $key . " >", str_replace(">[", "", str_replace("]", "", $value)));
-                            elseif (startsWith($value, ">=[") && endsWith($value, "]"))
-                                $this->db->where($this->table . "." . $key . " >=", str_replace(">=[", "", str_replace("]", "", $value)));
-                            elseif (startsWith($value, "<[") && endsWith($value, "]"))
-                                $this->db->where($this->table . "." . $key . " <", str_replace("<[", "", str_replace("]", "", $value)));
-                            elseif (startsWith($value, "<=[") && endsWith($value, "]"))
-                                $this->db->where($this->table . "." . $key . " <=", str_replace("<=[", "", str_replace("]", "", $value)));
-                            else
-                                $this->db->where($this->table . "." . $key, $value);
-                        } else
-                            throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
-                    }
-                }
-
-            }
-
+            if ($get_vars && is_array($get_vars))
+                $this->setFilter($get_vars);
 
             $offset = intval($offset);
             if (is_int($offset) && $limit)
@@ -159,27 +127,8 @@ class generic_model extends CI_Model {
         if ($this->requires_country && $countryId)
             $this->db->where('fk_pais', $countryId);
 
-        $keys = array_keys($get_vars);
-        foreach($keys as $key){
-
-            if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
-                $value = html_entity_decode($get_vars[$key]);
-                if (startsWith($value, "(") && endsWith($value, ")")) {
-                    $arr = explode(",", get_string_between($value, "(", ")"));
-                    $this->db->where_in($key, $arr);
-                }
-                elseif (startsWith($value, "%[") && endsWith($value, "]%"))
-                    $this->db->like($key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
-                elseif (startsWith($value, "%["))
-                    $this->db->like($key, str_replace("%[", "", $value), 'before');
-                elseif (endsWith($value, "]%"))
-                    $this->db->like($key, str_replace("]%", "", $value), 'after');
-                else
-                    $this->db->where($key, $value);
-            } else
-                throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
-
-        }
+        if ($get_vars && is_array($get_vars))
+            $this->setFilter($get_vars);
 
         $data = array();
 
@@ -291,27 +240,8 @@ class generic_model extends CI_Model {
         if ($this->requires_country && $countryId)
             $this->db->where('fk_pais', $countryId);
 
-        $keys = array_keys($get_vars);
-        foreach($keys as $key){
-
-            if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
-                $value = html_entity_decode($get_vars[$key]);
-                if (startsWith($value, "(") && endsWith($value, ")")) {
-                    $arr = explode(",", get_string_between($value, "(", ")"));
-                    $this->db->where_in($key, $arr);
-                }
-                elseif (startsWith($value, "%[") && endsWith($value, "]%"))
-                    $this->db->like($key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
-                elseif (startsWith($value, "%["))
-                    $this->db->like($key, str_replace("%[", "", $value), 'before');
-                elseif (endsWith($value, "]%"))
-                    $this->db->like($key, str_replace("]%", "", $value), 'after');
-                else
-                    $this->db->where($key, $value);
-            } else
-                throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
-
-        }
+        if ($get_vars && is_array($get_vars))
+            $this->setFilter($get_vars);
 
         $data = array();
         $data["estado"] = 0;
@@ -366,40 +296,8 @@ class generic_model extends CI_Model {
             if ($this->requires_country && $countryId)
                 $this->db->where($this->table . '.fk_pais', $countryId);
 
-            if ($get_vars && is_array($get_vars)) {
-
-                $keys = array_keys($get_vars);
-                foreach($keys as $key){
-                    if ($key != "offset" && $key != "limit" && $key != "sort" && $key != "pagination") {
-                        if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
-                            $value = html_entity_decode($get_vars[$key]);
-                            if (startsWith($value, "(") && endsWith($value, ")")) {
-                                $arr = explode(",", get_string_between($value, "(", ")"));
-                                $this->db->where_in($this->table . "." . $key, $arr);
-                            }
-                            elseif (startsWith($value, "%[") && endsWith($value, "]%"))
-                                $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
-                            elseif (startsWith($value, "%[") && endsWith($value, "]"))
-                                $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]", "", $value)), 'before');
-                            elseif (startsWith($value, "[") && endsWith($value, "]%"))
-                                $this->db->like($this->table . "." . $key, str_replace("[", "", str_replace("]%", "", $value)), 'after');
-                            elseif (startsWith($value, ">[") && endsWith($value, "]"))
-                                $this->db->where($this->table . "." . $key . " >", str_replace(">[", "", str_replace("]", "", $value)));
-                            elseif (startsWith($value, ">=[") && endsWith($value, "]"))
-                                $this->db->where($this->table . "." . $key . " >=", str_replace(">=[", "", str_replace("]", "", $value)));
-                            elseif (startsWith($value, "<[") && endsWith($value, "]"))
-                                $this->db->where($this->table . "." . $key . " <", str_replace("<[", "", str_replace("]", "", $value)));
-                            elseif (startsWith($value, "<=[") && endsWith($value, "]"))
-                                $this->db->where($this->table . "." . $key . " <=", str_replace("<=[", "", str_replace("]", "", $value)));
-                            else
-                                $this->db->where($this->table . "." . $key, $value);
-                        } else
-                            throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
-                    }
-                }
-
-            }
-
+            if ($get_vars && is_array($get_vars))
+                $this->setFilter($get_vars);
 
             $offset = intval($offset);
             if (is_int($offset) && $limit)
@@ -450,6 +348,40 @@ class generic_model extends CI_Model {
         }
 
         return array("pagination" => $pagination, "result" => $result?$result:array());
+    }
+
+    function setFilter($get_vars) {
+
+        $keys = array_keys($get_vars);
+        foreach($keys as $key){
+            if ($key != "offset" && $key != "limit" && $key != "sort" && $key != "pagination") {
+                if (is_array($this->entity_properties_name) && in_array($key, $this->entity_properties_name)) {
+                    $value = html_entity_decode($get_vars[$key]);
+                    if (startsWith($value, "(") && endsWith($value, ")")) {
+                        $arr = explode(",", get_string_between($value, "(", ")"));
+                        $this->db->where_in($this->table . "." . $key, $arr);
+                    }
+                    elseif (startsWith($value, "%[") && endsWith($value, "]%"))
+                        $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]%", "", $value)), 'both');
+                    elseif (startsWith($value, "%[") && endsWith($value, "]"))
+                        $this->db->like($this->table . "." . $key, str_replace("%[", "", str_replace("]", "", $value)), 'before');
+                    elseif (startsWith($value, "[") && endsWith($value, "]%"))
+                        $this->db->like($this->table . "." . $key, str_replace("[", "", str_replace("]%", "", $value)), 'after');
+                    elseif (startsWith($value, ">[") && endsWith($value, "]"))
+                        $this->db->where($this->table . "." . $key . " >", str_replace(">[", "", str_replace("]", "", $value)));
+                    elseif (startsWith($value, ">=[") && endsWith($value, "]"))
+                        $this->db->where($this->table . "." . $key . " >=", str_replace(">=[", "", str_replace("]", "", $value)));
+                    elseif (startsWith($value, "<[") && endsWith($value, "]"))
+                        $this->db->where($this->table . "." . $key . " <", str_replace("<[", "", str_replace("]", "", $value)));
+                    elseif (startsWith($value, "<=[") && endsWith($value, "]"))
+                        $this->db->where($this->table . "." . $key . " <=", str_replace("<=[", "", str_replace("]", "", $value)));
+                    else
+                        $this->db->where($this->table . "." . $key, $value);
+                } else
+                    throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $key);
+            }
+        }
+
     }
 
 }
