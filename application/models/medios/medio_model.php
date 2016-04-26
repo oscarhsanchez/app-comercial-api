@@ -32,11 +32,11 @@ class medio_model extends generic_Model {
         if ($extended) {
             $mediosArr = array();
 
-            foreach ($result AS $medio) {
+            foreach ($result["result"] AS $medio) {
                 $subtipo = $this->subtipo_medio_model->getBy("pk_subtipo", $medio->fk_subtipo, $countryId);
                 $medio->subtipo = $subtipo;
 
-                $mediosArr[] = $medio;    
+                $mediosArr[] = $medio;
             }
 
             $result["result"] = $mediosArr;
