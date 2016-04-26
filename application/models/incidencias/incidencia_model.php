@@ -18,6 +18,7 @@ class incidencia_model extends generic_Model {
         parent::__construct();
         $this->load->model('ubicaciones/ubicacion_model');
         $this->load->model('medios/medio_model');
+        $this->load->model('medios/subtipo_medio_model');
 
     }
 
@@ -46,6 +47,9 @@ class incidencia_model extends generic_Model {
 
                     $medio = $this->medio_model->getBy("pk_medio", $incidencia->fk_medio, $countryId);
                     if ($medio) {
+                        $subtipo = $this->subtipo_medio_model->getBy("pk_subtipo", $medio->fk_subtipo, $countryId);
+                        $medio->subtipo = $subtipo;
+
                         $ubicacion = $this->ubicacion_model->getBy("pk_ubicacion", $medio->fk_ubicacion, $countryId);
                         $ubicacion->medio = $medio;
                     }
