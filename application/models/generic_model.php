@@ -77,11 +77,11 @@ class generic_model extends CI_Model {
                     if (endsWith(strtolower($sort), "_desc")) {
                         if (is_array($this->entity_properties_name) && !in_array(str_replace("_desc", "",strtolower(trim($sort))), $this->entity_properties_name))
                             throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, $key);
-                        $this->db->order_by(str_replace("_desc", "",strtolower(trim($sort))), "desc");
+                        $this->db->order_by($this->table . "." . str_replace("_desc", "",strtolower(trim($sort))), "desc");
                     } else {
                         if (is_array($this->entity_properties_name) && !in_array(str_replace("_asc", "",strtolower(trim($sort))), $this->entity_properties_name))
                             throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, $key);
-                        $this->db->order_by(str_replace("_asc", "",strtolower(trim($sort))), "asc");
+                        $this->db->order_by($this->table . "." . str_replace("_asc", "",strtolower(trim($sort))), "asc");
                     }
                 }
             }
