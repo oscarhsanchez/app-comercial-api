@@ -8,6 +8,7 @@ class OrdenTrabajo extends eEntity {
     public $fk_pais;
     public $fk_propuesta;
     public $fk_medio;
+    public $fk_motivo;
     public $codigo_user;
     public $tipo;
     public $estado_orden;
