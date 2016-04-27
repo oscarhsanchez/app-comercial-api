@@ -25,6 +25,7 @@ class User extends eEntity {
     public $name;
     public $surnames;
     public $bool_geo;
+    public $bool_permitir_geo_ubicaciones;
     public $avatar;
     public $phone;
     public $token;
