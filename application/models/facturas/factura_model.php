@@ -17,8 +17,9 @@ class factura_model extends generic_Model {
 
 	function getAll($get_vars, $countryId=0, $offset, $limit, $sort, $pagination) {
 
-        $extended = $get_vars["extended"];
-        if ($extended) {
+        $extended = null;
+        if (isset($get_vars["extended"])) {
+            $extended = $get_vars["extended"];
             unset($get_vars["extended"]);
         }
 
