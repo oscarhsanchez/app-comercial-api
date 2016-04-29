@@ -30,9 +30,30 @@ class orden_trabajo_model extends generic_Model {
             unset($get_vars["extended"]);
         }
 
-        if (isset($get_vars["ubicacion"])) {
+        if (isset($get_vars["ubicacion"]) || (isset($get_vars["latitud"]) && isset($get_vars["longitud"]))) {
             $this->db->join("medios", "fk_medio = pk_medio", "left");
             $this->db->join("ubicaciones", "fk_ubicacion = pk_ubicacion", "left");
+        }
+
+        // Buscar ordenes por cercania
+        if (isset($get_vars["latitud"]) && isset($get_vars["longitud"])) {
+            $latitud = $get_vars["latitud"];
+            $longitud = $get_vars["longitud"];
+            $this->db->where("(
+                              6371 * ACOS (
+                              COS ( RADIANS($latitud) )
+                              * COS( RADIANS( ubicaciones.latitud ) )
+                              * COS( RADIANS( ubicaciones.longitud ) - RADIANS($longitud) )
+                              + SIN ( RADIANS($latitud) )
+                              * SIN( RADIANS( ubicaciones.latitud ) )
+                            ) ) < 0.5");
+
+            unset($get_vars["latitud"]);
+            unset($get_vars["longitud"]);
+        }
+
+        // Para el buscador por texto
+        if (isset($get_vars["ubicacion"])) {
             $this->db->like("ubicaciones.ubicacion", $get_vars["ubicacion"]);
             unset($get_vars["ubicacion"]);
         }
