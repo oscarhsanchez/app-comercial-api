@@ -16,6 +16,12 @@ class ubicacion_model extends generic_Model {
 
 	function getAll($get_vars, $countryId=0, $offset, $limit, $sort, $pagination) {
 
+        //Busqueda compleja: Direccion y por Codigo de ubicacion
+        if (isset($get_vars["search"])) {
+            $search = $get_vars["search"];
+            $this->db->where("(ubicacion LIKE '%$search%' OR pk_ubicacion LIKE '%$search%')", NULL, FALSE);
+            unset($get_vars["search"]);
+        }
 
         if (isset($get_vars["latitud"]) && isset($get_vars["longitud"])) {
             $latitud = $get_vars["latitud"];
