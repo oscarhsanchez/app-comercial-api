@@ -76,11 +76,11 @@ class generic_model extends CI_Model {
                 foreach ($sortArr as $sort) {
                     if (endsWith(strtolower($sort), "_desc")) {
                         if (is_array($this->entity_properties_name) && !in_array(str_replace("_desc", "",strtolower(trim($sort))), $this->entity_properties_name))
-                            throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, $key);
+                            throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, "");
                         $this->db->order_by($this->table . "." . str_replace("_desc", "",strtolower(trim($sort))), "desc");
                     } else {
                         if (is_array($this->entity_properties_name) && !in_array(str_replace("_asc", "",strtolower(trim($sort))), $this->entity_properties_name))
-                            throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, $key);
+                            throw new APIexception("Property not defined on Entity (Order by)", INVALID_PROPERTY_NAME, "");
                         $this->db->order_by($this->table . "." . str_replace("_asc", "",strtolower(trim($sort))), "asc");
                     }
                 }
@@ -165,6 +165,7 @@ class generic_model extends CI_Model {
             foreach ($properties as $name => $value) {
                 if (!in_array($name, $this->entity_properties_name))
                     throw new APIexception("Property not defined on Entity", INVALID_PROPERTY_NAME, $name);
+
             }
         } else {
             foreach ($array as $entity) {

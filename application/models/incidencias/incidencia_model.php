@@ -30,9 +30,16 @@ class incidencia_model extends generic_Model {
             unset($get_vars["extended"]);
         }
 
-        if (isset($get_vars["ubicacion"]) || (isset($get_vars["latitud"]) && isset($get_vars["longitud"]))) {
+        if (isset($get_vars["search"]) || isset($get_vars["ubicacion"]) || (isset($get_vars["latitud"]) && isset($get_vars["longitud"]))) {
             $this->db->join("medios", "fk_medio = pk_medio", "left");
             $this->db->join("ubicaciones", "fk_ubicacion = pk_ubicacion", "left");
+        }
+
+        //Busqueda compleja: Direccion y por Codigo de ubicacion
+        if (isset($get_vars["search"])) {
+            $search = $get_vars["search"];
+            $this->db->where("(ubicacion LIKE '%$search%' OR pk_ubicacion LIKE '%$search%')", NULL, FALSE);
+            unset($get_vars["search"]);
         }
 
         // Buscar ordenes por cercania
