@@ -6,13 +6,18 @@ class PropuestaDetalleOutdoor extends eEntity {
 
     public $pk_propuesta_detalle_outdoor;
     public $fk_propuesta_detalle;
+    public $fk_pais;
     public $fk_medio;
+    public $fk_categoria_propuesta;
+    public $fecha_inicio;
+    public $fecha_fin;
+    public $catorcena;
     public $tipo_negociacion;
-    public $unidad_negocio;
     public $posicion_medio;
     public $moneda;
     public $precio;
     public $tipo_cambio;
+    public $pautado;
     public $estado;
     public $token;
     public $created_at;
