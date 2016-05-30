@@ -40,7 +40,7 @@ class imagen_model extends generic_Model {
                 $instance->path = $dbEntity->path;
                 $instance->fk_pais = $countryId;
             } else {
-                $instance->nombre = getToken() . "." . $extension;
+                //$instance->nombre = getToken() . "." . $extension;  Dejamos el nombre del archivo que viene.
                 $instance->url = UBICACIONES_IMAGES_URL . "/";
                 $instance->path = UBICACIONES_IMAGES_PATH . "/";
                 $instance->estado = 1;
@@ -77,7 +77,7 @@ class imagen_model extends generic_Model {
                     $instance->path = $dbEntity->path;
                     $instance->fk_pais = $countryId;
                 } else {
-                    $instance->nombre = getToken() . "." . $extension;
+                    //$instance->nombre = getToken() . "." . $extension;
                     $instance->url = UBICACIONES_IMAGES_URL . "/";
                     $instance->path = UBICACIONES_IMAGES_PATH . "/";
                     $instance->estado = 1;

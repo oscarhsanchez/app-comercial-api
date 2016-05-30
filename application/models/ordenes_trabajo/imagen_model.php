@@ -76,7 +76,7 @@ class imagen_model extends generic_Model {
                     $instance->path = $dbEntity->path;
                     $instance->fk_pais = $countryId;
                 } else {
-                    $instance->nombre = getToken() . "." . $extension;
+                    //$instance->nombre = getToken() . "." . $extension;
                     $instance->url = ORDENES_IMAGES_URL . "/";
                     $instance->path = ORDENES_IMAGES_PATH . "/";
                     $instance->estado = 1;
