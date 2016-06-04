@@ -67,8 +67,8 @@ $db['default']['stricton'] = FALSE;
 define('MEMCACHE_SERVER', '127.0.0.1'); //192.162.0.23
 
 define('ORDENES_IMAGES_PATH', '/var/www/www-vallas/web/media/orden_trabajo_imagen');
-define('INCIDENCIAS_IMAGES_PATH', '/var/www/www-vallas/web/media/incidencia_imagen');
-define('UBICACIONES_IMAGES_PATH', '/var/www/www-vallas/web/media/ubicacion_imagen');
+define('INCIDENCIAS_IMAGES_PATH', '/var/www/www-vallas/media/media/incidencia_imagen');
+define('UBICACIONES_IMAGES_PATH', '/var/www/www-vallas/media/media/ubicacion_imagen');
 
 define('ORDENES_IMAGES_URL', 'http://localhost:8000/media/orden_trabajo_imagen');
 define('INCIDENCIAS_IMAGES_URL', 'http://localhost:8000/media/incidencia_imagen');
