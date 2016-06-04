@@ -3,6 +3,7 @@
 // This can be removed if you use __autoload() in config.php
 require_once(APPPATH.VALLAS_BASE_CONTROLLER);
 require_once(APPPATH.ENTITY_APIERROR);
+require_once(APPPATH.ENTITY_IMAGEN_UBICACION);
 
 
 
@@ -12,6 +13,40 @@ class index extends generic_controller {
     function __construct() {
         parent::__construct();
         $this->load->model('ubicaciones/imagen_model');
+    }
+
+    function import_get() {
+        if ($handle = opendir('/var/www/vhosts/vallas-admin/shared/web/media/ubicacion_imagen')) {
+
+            while (false !== ($entry = readdir($handle))) {
+
+                if ($entry != "." && $entry != "..") {
+
+                    echo "$entry\n";
+
+                    $arr1 = explode(".", $entry);
+                    $arr2 = explode("_", $arr1[0]);
+                    if (count($arr2) > 1) {
+                        $result = $this->imagen_model->getBy("nombre", $entry);
+
+                        if (!$result) {
+                            $imagen = new ImagenUbicacion();
+                            $imagen->estado = 1;
+                            $imagen->estado_imagen = 1;
+                            $imagen->nombre = $entry;
+                            $imagen->fk_ubicacion = $arr2[0];
+                            $imagen->token = getToken();
+                            $imagen->fk_pais = "MX";
+                            $imagen->path = "/var/www/vhosts/vallas-admin/current/web/media/ubicacion_imagen/";
+                            $imagen->url = "http://admin.gpovallas.com/media/ubicacion_imagen/";
+                            $imagen->_save(false, true);
+                        }
+                    }
+                }
+            }
+
+            closedir($handle);
+        }
     }
 
     /**
