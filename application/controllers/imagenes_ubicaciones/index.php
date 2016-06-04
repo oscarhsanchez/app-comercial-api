@@ -16,31 +16,35 @@ class index extends generic_controller {
     }
 
     function import_get() {
+        $this->load->model('ubicaciones/ubicacion_model');
         if ($handle = opendir('/var/www/vhosts/vallas-admin/shared/web/media/ubicacion_imagen')) {
 
             while (false !== ($entry = readdir($handle))) {
 
                 if ($entry != "." && $entry != "..") {
 
-                    echo "$entry\n";
-
                     $arr1 = explode(".", $entry);
                     $arr2 = explode("_", $arr1[0]);
                     if (count($arr2) > 1) {
-                        $result = $this->imagen_model->getBy("nombre", $entry, "MX");
 
-                        if (!$result) {
-                            $imagen = new ImagenUbicacion();
-                            $imagen->estado = 1;
-                            $imagen->estado_imagen = 1;
-                            $imagen->nombre = $entry;
-                            $imagen->fk_ubicacion = $arr2[0];
-                            $imagen->token = getToken();
-                            $imagen->fk_pais = "MX";
-                            $imagen->path = "/var/www/vhosts/vallas-admin/current/web/media/ubicacion_imagen/";
-                            $imagen->url = "http://admin.gpovallas.com/media/ubicacion_imagen/";
-                            $imagen->_save(false, true);
-                        }
+                        if ($this->ubicacion_model->getBy("pk_ubicacion", $arr2[0], "MX")) {
+                            $result = $this->imagen_model->getBy("nombre", $entry, "MX");
+
+                            if (!$result) {
+                                $imagen = new ImagenUbicacion();
+                                $imagen->estado = 1;
+                                $imagen->estado_imagen = 1;
+                                $imagen->nombre = $entry;
+                                $imagen->fk_ubicacion = $arr2[0];
+                                $imagen->token = getToken();
+                                $imagen->fk_pais = "MX";
+                                $imagen->path = "/var/www/vhosts/vallas-admin/current/web/media/ubicacion_imagen/";
+                                $imagen->url = "http://admin.gpovallas.com/media/ubicacion_imagen/";
+                                $imagen->_save(false, true);
+                            } else
+                                echo "Ya existe : $entry";
+                        } else
+                            echo "Ubicacion no existe : $entry";
                     }
                 }
             }
