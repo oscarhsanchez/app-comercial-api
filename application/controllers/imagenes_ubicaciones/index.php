@@ -27,7 +27,7 @@ class index extends generic_controller {
                     $arr1 = explode(".", $entry);
                     $arr2 = explode("_", $arr1[0]);
                     if (count($arr2) > 1) {
-                        $result = $this->imagen_model->getBy("nombre", $entry);
+                        $result = $this->imagen_model->getBy("nombre", $entry, "MX");
 
                         if (!$result) {
                             $imagen = new ImagenUbicacion();
