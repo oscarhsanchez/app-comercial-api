@@ -169,6 +169,8 @@ define('ENTITY_PROPUESTA_DETALLE_OUTDOOR', '/entities/PropuestaDetalleOutdoor.ph
 define('ENTITY_FACTURA', '/entities/Factura.php');
 define('ENTITY_FACTURA_DETALLE', '/entities/FacturaDetalle.php');
 define('ENTITY_MOTIVO_ORDEN_PENDIENTE', '/entities/MotivoOrdenPendiente.php');
+define('ENTITY_AGRUPACION_MEDIO', '/entities/AgrupacionMedio.php');
+define('ENTITY_AGRUPACION_MEDIO_DETALLE', '/entities/AgrupacionMedioDetalle.php');
 
 define('GENERIC_MODEL', '/models/generic_model.php');
 

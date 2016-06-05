@@ -47,7 +47,34 @@ class medio_model extends generic_Model {
             return $result;
 
     }
-	
+
+    function getDisponibilidad($pk_medio, $date) {
+
+        $query = "
+            SELECT medios.* FROM medios
+            LEFT JOIN (
+                SELECT pk_medio, COUNT(*) AS slots FROM medios
+                JOIN reserva_medios ON reserva_medios.fk_medio = medios.pk_medio
+                WHERE estatus_inventario = 'DISPONIBLE' AND '$date' BETWEEN fecha_inicio AND fecha_fin AND pk_medio = '$pk_medio'
+                GROUP BY pk_medio
+            ) slots ON slots.pk_medio = medios.pk_medio
+            WHERE medios.slots > IFNULL(slots.slots, 0) AND medios.pk_medio = '$pk_medio'
+        ";
+
+        $query = $this->db->query($query);
+
+        $result = $query->result();
+
+        if (count($result) > 0)
+            return true;
+        else
+            return false;
+
+
+
+    }
+
+
 }
 
 ?>

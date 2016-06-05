@@ -3,6 +3,7 @@
 // This can be removed if you use __autoload() in config.php
 require_once(APPPATH.VALLAS_BASE_CONTROLLER);
 require_once(APPPATH.ENTITY_APIERROR);
+require_once(APPPATH.ENTITY_CLIENTE);
 
 
 
@@ -10,7 +11,7 @@ class index extends generic_controller {
    	
     function __construct() {
         parent::__construct();
-        $this->load->model('propuestas/circuito_model');
+        $this->load->model('agrupaciones_medios/agrupacion_model');
     }
 
     /**
@@ -23,7 +24,7 @@ class index extends generic_controller {
      * @param sort (Opcional) : [field1_ASC, field2_DESC]
      * @param pagination (Opcional): {"active":1, "pageSize": 200, "page":0, "totalPages":null, "cache_token":null}
      *
-     * @RequiresPermission ["circuitos", "R"]
+     * @RequiresPermission ["medios", "R"]
      *
      */
     public function index_get()
@@ -31,12 +32,17 @@ class index extends generic_controller {
 
         $this->checkSecurity(__FUNCTION__);
 
+        $offset = $this->get("offset");
         $limit = $this->get("limit");
+        $sort = $this->get("sort");
+        $pagination = json_decode($this->get('pagination'));
 
         try {
-            $result = $this->circuito_model->getAll($this->get(), $this->session->fk_pais, $limit);
-
-            $this->response(array('result' => 'OK', 'parameters' => $result["parameters"], 'agrupaciones' => $result["agrupaciones"],'circuito' => $result["medios"]), 200);
+            $result = $this->agrupacion_model->getAll($this->get(), $this->session->fk_pais, $offset, $limit, $sort, $pagination);
+            if ($result["pagination"])
+                $this->response(array('result' => 'OK', 'pagination' => $result["pagination"], 'agrupaciones_medios' => $result["result"]), 200);
+            else
+                $this->response(array('result' => 'OK', 'agrupaciones_medios' => $result["result"]), 200);
 
         } catch (\Exception $e) {
             $err = new APIerror(INVALID_PROPERTY_NAME);
@@ -49,7 +55,7 @@ class index extends generic_controller {
 
     /**
      *
-     * @RequiresPermission ["circuitos", "C"]
+     * @RequiresPermission ["medios", "C"]
      *
      */
     function index_post()
@@ -75,7 +81,7 @@ class index extends generic_controller {
                 $array = json_decode(base64_decode($arrayPost));
 
 
-            $result = $this->circuito_model->create($entity, $array, $this->session->fk_pais);
+            $result = $this->agrupacion_model->create($entity, $array, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -97,7 +103,7 @@ class index extends generic_controller {
      * @param entityParam = value
      * @QueryParam condition
      *
-     * @RequiresPermission ["circuitos", "U"]
+     * @RequiresPermission ["medios", "U"]
      *
      */
     function index_put()
@@ -122,7 +128,7 @@ class index extends generic_controller {
                 $this->response(array('error' => $result), 200);
             }
 
-            $result = $this->circuito_model->update($get_vars, $this->put(), $this->session->fk_pais);
+            $result = $this->agrupacion_model->update($get_vars, $this->put(), $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
@@ -141,7 +147,7 @@ class index extends generic_controller {
 
     /**
      *
-     * @RequiresPermission ["circuitos", "D"]
+     * @RequiresPermission ["medios", "D"]
      *
      */
     function index_delete()
@@ -159,7 +165,7 @@ class index extends generic_controller {
 
         try {
 
-            $result = $this->circuito_model->delete($get_vars, $this->session->fk_pais);
+            $result = $this->agrupacion_model->delete($get_vars, $this->session->fk_pais);
             if ($result)
                 $this->response(array('result' => 'OK'), 200);
             else {
