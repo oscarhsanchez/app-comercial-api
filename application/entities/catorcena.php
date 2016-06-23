@@ -5,6 +5,8 @@ require_once(APPPATH.ENTITY_ESOCIAL_ENTITY);
 class Catorcena extends eEntity {
 
     public $id;
+    public $fecha_inicio;
+    public $fecha_fin;
     public $anio;
     public $catorcena;
     public $mes;
