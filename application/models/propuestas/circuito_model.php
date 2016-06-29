@@ -54,11 +54,11 @@ class circuito_model extends generic_Model {
         $operationMargin["medium"] = 20;
         $operationMargin["high"] = 30;
 
-        $groupsPrecentage = 0.35;
+        $groupsPrecentage = 0.30;
 
-        $highPrecentage = 0.35;
-        $mediumPrecentage = 0.35;
-        $lowPrecentage = 0.30;
+        $highPrecentage = 0.25;
+        $mediumPrecentage = 0.25;
+        $lowPrecentage = 0.20;
 
         $highRange = array(7.5, 10);
         $mediumRange = array(4.5, 7.5);
@@ -77,12 +77,12 @@ class circuito_model extends generic_Model {
         //Obtenemos las agrupaciones de medios disponibles
         $agrupacionesDisponibles = $this->agrupacion_model->getAgrupacionesDisponibles($fecha_inicio, $fecha_fin);
 
-        $limit = $clientBudget*$groupsPrecentage;
+        $limitAgrupaciones = $clientBudget*$groupsPrecentage;
         foreach($agrupacionesDisponibles as $agrupacion) {
             $currentBudget += $agrupacion->coste;
             $agrupaciones[] = $agrupacion;
 
-            if ($currentBudget > $limit)
+            if ($currentBudget > $limitAgrupaciones)
                 break;
 
         }
@@ -94,40 +94,40 @@ class circuito_model extends generic_Model {
         $medios = $this->getMediosDisponibles($fecha_inicio, $fecha_fin, $highRange[0], $highRange[1]);
 
 
-        $limit = $clientBudget*$highPrecentage*$groupsPrecentage;
+        $limitHigh = $limitAgrupaciones + $clientBudget*$highPrecentage;
         $totalHigh = 0;
         foreach ($medios AS $medio) {
             $currentBudget += $medio->coste;
             $resultMedios[] = $medio;
             $totalHigh++;
 
-            if ($currentBudget > $limit)
+            if ($currentBudget > $limitHigh)
                 break;
 
         }
 
         //Oobtenemos los medios disponibles con puntuacion Media, comprobando restricciones hasta cumplir el % de presupuesto establecido
         $medios = $this->getMediosDisponibles($fecha_inicio, $fecha_fin, $mediumRange[0], $mediumRange[1]);
-        $limit = $currentBudget + ($clientBudget*$mediumPrecentage);
+        $limitMedium = $limitHigh + ($clientBudget*$mediumPrecentage);
         $totalMedium = 0;
         foreach ($medios AS $medio) {
             $currentBudget += $medio->coste;
             $resultMedios[] = $medio;
             $totalMedium++;
-            if ($currentBudget > $limit)
+            if ($currentBudget > $limitMedium)
                 break;
 
         }
 
         //Oobtenemos los medios disponibles con puntuacion Baja, comprobando restricciones hasta cumplir el % de presupuesto establecido
         $medios = $this->getMediosDisponibles($fecha_inicio, $fecha_fin, $lowRange[0], $lowRange[1]);
-        $limit = $currentBudget + ($clientBudget*$lowPrecentage);
+        $limitLow = $limitMedium + $clientBudget*$lowPrecentage;
         $totalLow = 0;
         foreach ($medios AS $medio) {
             $currentBudget += $medio->coste;
             $resultMedios[] = $medio;
             $totalLow++;
-            if ($currentBudget > $limit)
+            if ($currentBudget > $limitLow)
                 break;
 
         }
