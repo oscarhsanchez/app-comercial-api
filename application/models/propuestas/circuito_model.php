@@ -132,7 +132,7 @@ class circuito_model extends generic_Model {
 
         }
 
-        echo "TOTAL: " . $currentBudget . " HIGH: " . $totalHigh . " MEDIUM: " . $totalMedium . " LOW: " . $totalLow;
+        //echo "TOTAL: " . $currentBudget . " HIGH: " . $totalHigh . " MEDIUM: " . $totalMedium . " LOW: " . $totalLow;
 
         $quality_range = array();
         $quality_range["high"] = $highRange;
