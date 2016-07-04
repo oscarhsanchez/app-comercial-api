@@ -15,7 +15,8 @@ class session_model extends CI_Model {
 		$token = sha1($userId.$countryId.time().TOKEN_SALT_KEY);
         $renew_token = sha1($userId.$countryId.time().RENEW_SALT_KEY);
         echo "hora: " . time();
-        echo "token:" . $token;
+        echo " token:" . $token;
+        echo " datos: " .$userId.$countryId.time().TOKEN_SALT_KEY;
 		$sesion = new Session();
         $sesion->fk_user = $userId;
         $sesion->fk_pais = $countryId;
